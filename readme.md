@@ -29,12 +29,12 @@
 
 ## Introduction
 
-This document provides *detailed instructions on how to use the enemy behavior tool for 2D video games*.  
-This manual is divided into several sections covering all necessary aspects for the installation and use of the tool. Initially, the user will be guided through the installation process from a GitHub repository. Next, the architecture of the tool will be detailed, explaining the key components and the concept of Finite State Machines. Subsequently, a step-by-step workflow for creating new enemies will be presented, including the configuration of states, transitions, sensors, and actuators. Finally, tips and best practices for effective enemy design will be offered, as well as information on how to obtain technical support.
+This document provides *detailed instructions* on how to use the 2D enemy behavior framework for video games.  
+This manual is divided into several sections covering all necessary aspects for the installation and use of the tool. Initially, the user will be guided through the installation process from a GitHub repository. Next, the [architecture](#arquitectura) of the tool will be detailed, explaining the key components and the concept of [Finite State Machines](#fsm). Subsequently, a step-by-step [workflow](#flujo-de-trabajo) for creating new enemies will be presented, including the configuration of [states](#estado), transitions, sensors, and actuators. Finally, tips and best practices for effective enemy design will be offered, as well as information on how to obtain technical support.
 
 ## Objective of the Tool
 
-Over time, games have evolved, becoming increasingly complex. Enemies, which are the player's main obstacle, must remain challenging enough to capture the player's attention without feeling overwhelming. This increases the time and complexity of creation. To facilitate this task, the **Enemy framework 2D** aims to create fully functional enemies starting from simple elements called actuators and controlled by a state machine. Additionally, to obtain information from the outside world, Sensors will be needed, which will function as transitions between different states.
+Over time, games have evolved, becoming increasingly complex. Enemies, which are the player's main obstacle, must remain challenging enough to capture the player's attention without feeling overwhelming. This increases the time and complexity of creation. To facilitate this task, the **Enemy Behaviour Framework 2D** aims to create fully functional enemies starting from simple elements called actuators and controlled by a finite state machine. Additionally, to obtain information from the outside world, Sensors will be needed, which will function as transitions between different states.
 
 ## Objective of the Manual
 
@@ -74,7 +74,7 @@ Step-by-step installation:
 
 ### *Scripts*
 
-- Contains the necessary scripts for the framework to function.
+- Contains the necessary [scripts](#script) for the [framework](#framework) to function.
 - Includes logic for state management, enemy behaviors, and collision detection.
 - Organized into subfolders according to their functionality (*FSM*, *Actuators*, *SensorsAndEmitters*, *Editors*, *PlayerBehaviour*, *Basic Components*, *Editors*, *Animation*).
 
@@ -85,7 +85,7 @@ Step-by-step installation:
 
 ### *Prefabs*
 
-- Includes pre-configured enemy prefabs ready for use.
+- Includes pre-configured enemy [prefabs](#prefab) ready for use.
 
 ### *Animations*
 
@@ -130,7 +130,7 @@ This actuator allows moving an object horizontally, either to the left or to the
       - *Speed:* Sets the speed at which the object will move.
     - *True:* If the movement is accelerated, the speed will increase:
       - *Goal Speed:* This is the maximum speed the object will reach after accelerating.
-      - *Interpolation Time:* This is the time it takes for the object to go from speed 0 to its target speed.
+      - *Interpolation Time:* This is the time it takes for the object to go from actual speed to it's target speed.
       - *Easing Function:* Defines how the acceleration behaves.
 
 - **Vertical Actuator**:  
@@ -152,7 +152,7 @@ This actuator allows moving an object horizontally, either to the left or to the
       - *Speed:* Sets the speed at which the object will move.
     - *True:* If the movement is accelerated, the speed will increase:
       - *Goal Speed:* This is the maximum speed the object will reach after accelerating.
-      - *Interpolation Time:* This is the time it takes for the object to go from speed 0 to its target speed.
+      - *Interpolation Time:* This is the time it takes for the object to go from actual speed to it's target speed.
       - *Easing Function:* Defines how the acceleration behaves.
 
 - **Directional Actuator**:
@@ -164,7 +164,8 @@ This actuator allows moving an object horizontally, either to the left or to the
     - *Bounce:* The object changes direction and simulates a bounce.
     - *Destroy:* The object disappears upon collision.
   - *Angle:* Angle at which the object will move.
-  - *Aim Player:* Indicates whether the object will follow the player's direction (with this option, the angle does not appear because its value is determined by your position and the target's position).
+  - *Aim Player:* Indicates whether the object will follow the player's direction (with this option, the angle does not appear because its value is determined by your position and the target's position).<br>
+  For this to happen there must be an object with [tag](#tag) "Player".
   - *Is Accelerated*
     - *False:* If not accelerated, the enemy will move with a constant linear speed. You can configure:
       - *Throw:* The force will be applied only once, simulating a launch.
@@ -172,7 +173,7 @@ This actuator allows moving an object horizontally, either to the left or to the
 
     - *True:* If the movement is accelerated, the speed will increase:
       - *Goal Speed:* This is the maximum speed the object will reach after accelerating.
-      - *Interpolation Time:* This is the time it takes for the object to go from speed 0 to its target speed.
+      - *Interpolation Time:* This is the time it takes for the object to go from actual speed to its target speed.
       - *Easing Function:* Defines how the acceleration behaves.
 
 - **Circular Actuator**:  
@@ -181,7 +182,7 @@ This actuator allows moving an object horizontally, either to the left or to the
   - *Rotation Point Position*
     Defines the central point around which the rotation occurs.
     - *None:* If not assigned, the object will rotate around its own center.
-    - *Transform:* If an object is assigned, the rotation will occur around that point.
+    - *[Transform](#transform):* If an object is assigned, the rotation will occur around that point.
 
   - *Max Angle*
     Maximum angle that the circular movement can reach (360 indicates a full circle, other angles behave like a pendulum).
@@ -200,13 +201,12 @@ This actuator allows moving an object horizontally, either to the left or to the
 
 - **Move to a Point Actuator**:
 Makes the enemy move towards a specific fixed point in the scene. There are two configurations depending on *Use Way*:
-  - *Random Area*
+  - *Random Area*: Picks random points within an area.
 ![MoveToAPointActuator](./Manual/MoveToAPointActuatorA.png)
-Random area picks random points within an area.
-    - *Random Area:* Collider that will serve as the area reference.
+    - *Random Area:* [Collider](#collider) that will serve as the area reference.
     - *Time Between Random Points:* How often the point changes to a different one.
   - *Waypoint*: Indicates that we want to follow a predetermined path of points.
-    - *Is A Circle:* Indicates whether we want the list to restart when reaching the end of the waypoints.
+    - *Is A Cycle:* Indicates whether we want the list to restart when reaching the end of the waypoints.
     - *Same Waypoints Behaviour:* Indicates whether we want the behavior to be the same for all waypoints.
       - If so, a single point specification panel will be created:
 ![MoveToAPointActuator](./Manual/MoveToAPointActuatorS.png)
@@ -234,7 +234,7 @@ Random area picks random points within an area.
     - *False:* If not accelerated, the object will move at a constant speed defined by the *Speed* parameter.
     - *True:* If accelerated, the speed will increase progressively according to the following parameters:
       - *Goal Speed:* This is the maximum speed the object will reach.
-      - *Interpolation Time:* This is the time it takes for the object to go from speed 0 to its target speed.
+      - *Interpolation Time:* This is the time it takes for the object to go from current speed to it's target speed.
       - *Easing Function:* Defines how the acceleration behaves.
 
 ### Sensors
@@ -245,33 +245,33 @@ We have five sensors:
 - **Area Sensor:**  
  ![AreaSensor](./Manual/AreaSensor.png)  
  The area sensor detects when a specific object enters its detection zone.<br>
-  - *Start Detecting Time:* delay time until detection starts.
-  - *Target:* object to be detected.
+  - *Start Detecting Time:* Delay time until detection starts.
+  - *Target:* Object to be detected.
   - *Detection Condition:* Indicates whether to detect when leaving or entering the area.
 
 - **Collision Sensor:**  
  ![CollisionSensor](./Manual/CollisionSensor.png)  
  Detects when the enemy physically collides with another object. Unlike the *Area Sensor*, this requires an actual collision rather than just detecting presence within an area.<br>
-  You must specify which *physics layers* activate the sensor.
-  - *Start Detecting Time:* delay time until detection starts.
+  You must specify which *[physics layers](#capa-fisica)* activate the sensor.
+  - *Start Detecting Time:* Delay time until detection starts.
   - *Layers to Collide:* Physics layer mask indicating what we want to collide with.
 
 - **Distance Sensor:**  
 ![DistanceSensor](./Manual/DistanceSensor.png)  
- Detects when a specific object (*Target*) is at a *certain distance from the enemy*.<br>
-  - *Distance type:* type of distance to check.
+ Detects when a specific object *Target* is at a *certain distance from the enemy*.<br>
+  - *Distance type:* Type of distance to check.
     - Magnitude: 360 degrees of detection.
-    - Single Axis: a single axis.
+    - Single Axis: A single axis.
   - *Detection Condition:* Indicates whether to detect when leaving or entering the area.
-  - *Target:* object to be detected.
-  - *Start Detecting Time:* delay time until detection starts.
-  - *Detection Distance:* detection distance.
+  - *Target:* Object to be detected.
+  - *Start Detecting Time:* Delay time until detection starts.
+  - *Detection Distance:* Detection distance.
 
 - **Time Sensor:**  
  ![TimeSensor](./Manual/TimeSensor.png)  
  Detects when a specific time elapses.
-  - *Start Detecting Time:* delay time until detection starts.
-  - *Detection Time:* detection time.
+  - *Start Detecting Time:* Delay time until detection starts.
+  - *Detection Time:* Detection time.
 - **Damage Sensor:**
 ![DamageSensor](./Manual/DamageSensor.png)  
  Detects when an entity *receives damage*.
@@ -283,24 +283,24 @@ We have five sensors:
   - **Instant:**
   ![DamageEmitter](./Manual/DamageEmitter.png)
   Instant damage that affects only once upon contact.
-    - *Destroy After Doing Damage:* allows indicating whether the object should disappear after dealing damage.
-    - *Instant Kill:* allows indicating whether to directly kill the entity it collides with.
-    - *Damage Amount:* if you don't want to eliminate or kill, indicate the damage to be applied.
+    - *Destroy After Doing Damage:* Allows indicating whether the object should disappear after dealing damage.
+    - *Instant Kill:* Allows indicating whether to directly kill the entity it collides with.
+    - *Damage Amount:* If you don't want to instantly eliminate the entity it collides with, indicate the damage to be applied.
 
   - **Permanence:**
   ![DamageEmitterP](./Manual/DamageEmitterP.png)
   Damage over time that affects while you are inside the object.
-    - *Damage Amount:* amount of health subtracted each time.
-    - *Damage Cooldown:* time interval between each damage application.
+    - *Damage Amount:* Amount of health subtracted each time.
+    - *Damage Cooldown:* Time interval between each damage application.
 
   - **Residual:**
   ![DamageEmitterR](./Manual/DamageEmitterR.png)
   Residual damage continues to affect even when you are no longer in contact.
-    - *Destroy After Doing Damage:* allows indicating whether the object should be destroyed after the first hit.
-    - *Instant Damage Amount:* initial damage applied upon first contact.
-    - *Residual Damage Amount:* damage applied in each residual repetition.
-    - *Damage Cooldown:* time interval between each residual damage application.
-    - *Number Of Applications:* total number of times residual damage is applied.
+    - *Destroy After Doing Damage:* Allows indicating whether the object should be destroyed after the first hit.
+    - *Instant Damage Amount:* Initial damage applied upon first contact.
+    - *Residual Damage Amount:* Damage applied in each residual repetition.
+    - *Damage Cooldown:* Time interval between each residual damage application.
+    - *Number Of Applications:* Total number of times residual damage is applied.
 
 ### State
 
@@ -325,98 +325,99 @@ A state is a specific behavior that an enemy can have at a certain time. States 
 ### Animator Manager
 
 Manages the animations of enemies based on their states and actions. If you want to add an animation, you also need to add a Unity Animator component.
-It is important that all Sprites intended for use *face to the right*.
+It is important that all [sprites}(#sprite) intended for use *face to the right*.
+
+- *Can [Flip](#flip) X:* Indicates if the sprite can rotate in X axis.
+- *Can Flip Y:* Indicates if the sprite can rotate in Y axis.
 
 ### Life
 
 Manages the life of objects.
  ![Life](./Manual/Life.png)
 
-- *Initial Life:* initial health.
-- *Entity type:* type of entity (player or enemy).
+- *Initial Life:* Initial health.
+- *Entity type:* Type of entity (Player or Enemy).
 
 ## Practical Examples
 
-ALL examples start from the Scene Template: Base Scene.  
+All examples start from the Scene Template: **Base Scene**.  
 To create a new scene, open the File menu, select New Scene, and choose Base Scene.
 The scene includes a player and a world ready to function.
 
-WARNING: In the examples, when it says to delete all animator states, it refers to those that are not native to Unity, i.e., those that appear in gray. Unity's own states will continue to appear even if you try to delete them.
+**WARNING**: In the examples, when it says to delete all animator states, it refers to those that are not native to Unity, i.e., those that appear in gray. Unity's own states will continue to appear even if you try to delete them.
 
-### First Example: SPIKES
+
+**Artwork Notice**: The graphic material used primarily in this framework has been obtained from the Unity Asset Store and belongs to the creator Pixel Frog, whose itch.io page is: [https://pixelfrog-assets.itch.io/](https://pixelfrog-assets.itch.io/)
+The eagle and item effects are from:
+<https://assetstore.unity.com/packages/2d/characters/sunny-land-103349>
+### First Example: Spikes
 
 One of the most common enemies are spikes, which do not move but do damage to the player. Let's create them.
 For the example, I will use the stone image:  
 ![Spikes](./Manual/Pinchos.png)
+  1. Create an object named *spikes* from the BaseEnemy prefab located in Assets/Prefabs.
 
-1. Create an object starting from the stone sprite located in Assets/Animations/Sprites.
-2. Add a physics layer for the enemy (if not already created), for example, Enemy.
-3. Add a Box Collider 2D component.
-4. Add a Damage Emitter component.
-5. Indicate how you want the enemy to deal damage:
-      - We want it to deal damage from the start.
-      - That it is of the Persistent type.
-      - That it deals 1 damage every 2 seconds.
+  2. Change the *[Sprite Renderer](#sprite-renderer)* to the spikes image (if it doesn’t already match), which is located in Assets/Animations/Sprites/Spikes, and adjust the Collider to fit the image.
 
-With that, we will already have an enemy that will damage us upon contact.
+  3. Freeze the X and Y positions under the Constraints section of the Rigidbody 2D, so that the spikes remain fixed in place.
 
-6. Add an AnimationManager component. You will see that when you do this, a Unity Animator component is also created.
+  4. Remove the AnimatorManager and Animator components, since the object doesn't require animation.
 
-7. Configure the Animator Manager:
-      - We don't want it to flip in either the x or y axis.
+  5. Configure the Damage Emitter as follows:
+      - Active From Start: True
+      - Damage Type: Permanence
+      - Destroy After Doing Damage: False
+      - Damage Amount: 1
+      - Damage Cooldown: 2
 
-8. Duplicate the animation controller that comes as an example in Assets/Animations.
 
-9. Enter the Unity Animator Editor (by double-clicking on the controller you just created), where you will see many possible states. Since we only want the Idle animation, delete the rest of the states (select with the mouse and press Delete).
 
-10. Click on the Idle state and drag the animation you want to use to Motion. In this case, we will use IdleRock, which is located in Assets/Animations/Anim.
+### Second Example: Wanderer
 
-11. Add the controller you duplicated to the Animator that was created when you added the AnimatorManager.
+Another very common enemy is a wanderer, also known as: Goomba, Reptacillo, or by another name in many games.
+For the example, I will use the rabbit image:  
+![Oso](./Manual/Bunny.png)
 
-Now we would have a functional enemy with animation.
+  1. Create an object named deambulador from the BaseEnemy prefab, located in Assets/Prefabs.
 
-### Second Example: WANDERER
+  2. Change the Sprite Renderer to any Bunny image found in Assets/Animations/Sprites/Bunny, and adjust the Collider to match the image.
 
-Another very common enemy is a wanderer, also known as: goomba, little reptile, or by another name in many games.
-For the example, I will use the bear image:  
-![Oso](./Manual/Oso.png)
+  3. Freeze the rotation under Constraints of the Rigidbody 2D.
 
-1. Create an object starting from the bear sprite located in Assets/Animations/Sprites.
-2. Add a physics layer for the enemy (if not already created), for example, Enemy.
-3. Add a Box Collider 2D and a Rigidbody 2D component (freeze rotation in constraints).
-4. Add a Damage Emitter component.
-5. Indicate how you want the enemy to deal damage:
-      - We want it to deal damage from the start.
-      - That it is of the Instant type.
-      - That it deals 1 damage.
-6. We are going to add movement, which is controlled by a state machine, so add an FSM component.
-7. Add a State component and assign it to the FSM in the Initial State.
-8. Add the Horizontal Actuator movement component and add it to the list of actuators in the state.
-9. Configure the horizontal movement:
-      - We don't want it to be accelerated.
-      - That upon collision, it bounces off the World and Player physics layers.
-      - That it does not follow the player.
-      - That the direction is to the right.
-      - That it is not a throw.
-      - That it has a continuous speed of 7.
-10. Add the already created DamageEmitter component to the list of DamageEmitters of the current State.
+  4. Configure the Damage Emitter as follows:
+      - Active From Start: True
+     - Damage Type: Instant
+      - Destroy After Doing Damage: False
+     - Instant Kill: False
+      - Damage Amount: 1
 
-Now let's add animations:
+  5. Add a Horizontal Actuator movement component and add it to the Actuator List of the State.
 
-10. Add an AnimationManager component. You will see that when you do this, a Unity Animator component is also created.
+  6. Configure the Horizontal Actuator:
+      - Reaction After Collision: Bounce
+      - Layers to Collide: World, Player
+      - Follow Player: False
+      - Direction: Left
+      - Is Accelerated: False
+      - Throw: False
+      - Speed: 7
+  7. Configure the Animator Manager:
+      - Can Flip X: True
+      - Can Flip Y: False
 
-11. Configure the Animator Manager:
-      - We don't want it to flip on the y-axis but we do want it to flip on the x-axis.
+  8. Duplicate the *Animator Controller* that comes as an example in Assets/Animations.
 
-12. Duplicate the animation controller that comes as an example in Assets/Animations.
+  9. Open Unity’s animation editor (by double-clicking the Animator Controller you just created), where you’ll see many states. Since we only want the animations for Horizontal Movement, Damage, and Die, delete all other states (select them with the mouse and press Delete).
 
-13. Enter the Unity Animator Editor (by double-clicking on the controller you just created), where you will see many possible states. Since we only want the Idle and horizontal movement animations, delete the rest of the states (select with the mouse and press Delete).
+  10. Click on the Horizontal Movement state and drag the animation you want to use into Motion — in this case, use Run from Assets/Animations/Sprites/Bunny.
 
-14. Click on the Idle state and drag the animation you want to use to Motion. In this case, we will use Idlebear, which is located in Assets/Animations/Anim.
+  11. Click on the Damage state and drag the animation you want to use into Motion — in this case, use Hit from Assets/Animations/Sprites/Bunny.
 
-15. Click on the Horizontalovement state and drag the animation you want to use to Motion. In this case, we will use walkbear, which is located in Assets/Animations/Anim.
+  12. Click on the Die state and drag the animation you want to use into Motion — again, use Hit from Assets/Animations/Sprites/Bunny.
 
-16. Add the controller you duplicated to the Animator that was created when you added the AnimatorManager.
+  13. Assign the duplicated Animator Controller to the Animator component of the deambulador enemy.
+
+
 
 ### Third Example: Turret + Bullets
 
@@ -424,155 +425,145 @@ Let's continue creating an enemy that shoots bullets. To do this, we will first 
 For the bullet example, I will use the bullet image:  
 ![Bullet](./Manual/Bullet.png)
 
-1. Create an object starting from the bullet sprite located in Assets/Animations/Sprites.
-2. Add a physics layer for the enemy (if not already created), for example, Enemy.
-3. Add a Box Collider 2D and a Rigidbody 2D component.
-4. Add a Damage Emitter component.
-5. Indicate how you want the enemy to deal damage:
-      - We want it to deal damage from the start.
-      - That it is of the Instant type.
-      - That it destroys itself after dealing damage.
-      - That it deals 1 damage.
-6. We are going to add movement, which is controlled by a state machine, so add an FSM component.
-7. Add a State component and assign it to the FSM in the Initial State.
-8. Add the Directional Actuator component and add it to the list of actuators in the State.
-9. Configure the horizontal movement:
-      - We want it to collide with the World and Player physics layers.
-      - That upon collision, it destroys itself.
-      - That it is not accelerated.
-      - That it follows the player.
-      - That it is not a throw.
-      - That it has a continuous speed of 10.
-10. Add the already created DamageEmitter component to the list of DamageEmitters of the current State.
+  1. Create a prefab named Bullet from the BaseEnemy prefab, located in Assets/Prefabs.
+  2. Change the Sprite Renderer to the bullet sprite found in Assets/Animations/Sprites/Trunk, and adjust the Collider to match the image.
+  3. Freeze the rotation in the Constraints section of the Rigidbody 2D.
+  4. Configure the Damage Emitter as follows:
+      - Active From Start: True
+      - Damage Type: Instant
+      - Destroy After Doing Damage: True
+      - Instant Kill: False
+      - Damage Amount: 1
+  5. Add a Horizontal Movement component and add it to the Actuator List of the State.
+  6. Configure the Horizontal Movement:
+      - Reaction After Collision: Destroy
+      - Layers to Collide: World, Player
+      - Follow Player: False
+      - Direction: Left
+      - Is Accelerated: False
+      - Throw: False
+      - Speed: 10
+  7. Remove the AnimatorManager and Animator components, as they are not needed (the object has no animation).
 
 Now let's create the Turret:
 For the turret example, I will use the plant image:  
 ![Planta](./Manual/Planta.png)  
 
-1. Create an object starting from the plant sprite located in Assets/Animations/Sprites.
-2. Add a physics layer for the enemy (if not already created), for example, Enemy.
-3. Add a Box Collider 2D and a Rigidbody 2D component (freeze rotation and position in constraints).
-4. Add a Damage Emitter component.
-5. Indicate how you want the enemy to deal damage:
-      - We want it to deal damage from the start.
-      - That it is of the Instant type.
-      - That it deals 1 damage.
-6. We are going to add the creation of other enemies (spawner), which is controlled by a state machine, so add an FSM component.
-7. Add a State component and assign it to the FSM in the Initial State.
-8. Add the Spawner Actuator component and add it to the list of actuators in the state.
-9. Configure the Spawner Actuator:
-      - We want it to create infinite enemies.
-      - That it does so every 2 seconds.
-      - That it creates a single enemy at a time.
-10. Add the bullet prefab to the spawner's spawn list, in Prefab to Spawn.
-11. Create a new empty object where you want the new enemy to be created and assign it to the spawner's spawn list, in Spawn Point.
+  1. Create an object named Torret from the BaseEnemy prefab located in Assets/Prefabs.
+  2. Change the Sprite Renderer to the trunk image located in Assets/Animations/Sprites/Trunk and adjust the Collider to fit the image.
+  3. Freeze the rotation and the X and Y positions in the Rigidbody 2D Constraints so that the turret remains fixed.
+  4. Remove the Damage Emitter component and delete it from the Damage Emitter List in the State.
+  5. Add a Spawner Actuator component and include it in the Actuator List of the State.
+  6. Configure the Spawner Actuator as follows:
+      - Infinite Enemies: True
+      - Spawn Interval: 1
+      - Spawn List: One element
+        - Prefab To Spawn: Add the previously created bullet prefab.
+        - Spawn Point: Create an empty GameObject and assign it as the reference.
+  7. Position the empty GameObject at the mouth of the trunk, as the bullets will be spawned from there.
+  8. It is important to remember that bullets are configured to move to the left, so the trunk should be placed on the right side of the scene.
+  
+Now let’s configure the animations:
 
-Now let's add animations:
+  9. Configure the Animator Manager:
+        - Can Flip X: False
+        - Can Flip Y: False
+  10. Duplicate the *Animator Controller* that is provided as an example in Assets/Animations.
+  11. Open the animation editor in Unity by double-clicking on the Animator Controller you just created. You'll see many possible states — since we only want it to play Idle and Spawn animations, delete the rest by selecting them and pressing Delete.
+  12. Click on the Idle state and drag the animation you want into the Motion field; in this case, use the Idle animation from Assets/Animations/Sprites/Trunk.
+  13. Click on the Spawn state and drag the desired animation into the Motion field; in this case, use the Atack animation from Assets/Animations/Sprites/Trunk.
+  14. Make sure the Atack animation clip has an event at second 0:07 that calls the Spawn method. This will ensure that the bullet is created at the correct moment during the animation.
+   ![SpawnInfo](./Manual/Spawn.png)
+  15. Assign the duplicated Animator Controller to the Animator component of the turret enemy.
 
-12. Add an AnimationManager component. You will see that when you do this, a Unity Animator component is also created.
 
-13. Configure the Animator Manager:
-      - We don't want it to flip on either the y-axis or the x-axis.
+### Fourth Example: TikTik 
 
-14. Duplicate the animation controller that comes as an example in Assets/Animations.
+Let's create an enemy from HollowKnight, the [TikTik](https://hollowknight.fandom.com/es/wiki/Tiktik), which moves along a platform, following its edge.
+For this example, we will use the chicken image:
 
-15. Enter the Unity Animator Editor (by double-clicking on the controller you just created), where you will see many possible states. Since we only want the Idle and spawn animations, delete the rest of the states (select with the mouse and press Delete).
+![Chicken](./Manual/chicken.png)  
 
-16. Click on the Idle state and drag the animation you want to use to Motion. In this case, we will use Idleplant, which is located in Assets/Animations/Anim.
-
-17. Click on the Spawn state and drag the animation you want to use to Motion. In this case, we will use SpawnPlant, which is located in Assets/Animations/Anim.
-
-18. Add the controller you duplicated to the Animator that was created when you added the AnimatorManager.
-
-### Fourth Example: TikTik (splines)
-
-Let's create a Hollow Knight enemy, the TikTik, which moves along the edge of a platform.
-For the example, I will use the opossum image:  
-![Oso](./Manual/Zariguella.png)  
-Before starting with the enemy creation, we will add a square 2D object that will serve as a platform. We must add a Box Collider 2D and a Rigidbody 2D component (freeze rotation and position in constraints), as well as add it to the World layer.
+Before we start creating the enemy, let's add a 2D square object that will serve as the platform. We need to add a Box Collider 2D component to it and set its layer to World. If you want it to match the color of the map edges, apply the material named *Brown* found in Assets/Materials.
 
 Let's start with the enemy:
 
-1. Create an object starting from the opossum sprite located in Assets/Animations/Sprites.
-2. Add a physics layer for the enemy (if not already created), for example, Enemy.
-3. Add a Box Collider 2D and a Rigidbody 2D component.
-4. Add a Damage Emitter component.
-5. Indicate how you want the enemy to deal damage:
-      - We want it to deal damage from the start.
-      - That it is of the Instant type.
-      - That it deals 1 damage.
-6. We are going to add movement, which is controlled by a state machine, so add an FSM component.
-7. Add a State component and assign it to the FSM in the Initial State.
-8. Add the Spline Follower Actuator component and add it to the list of actuators in the state.
-9. Create a square-shaped Spline and rotate it 90 degrees on the X-axis.
-10. Configure the Spline Follower Actuator:
-      - Add the newly created spline as a reference.
-      - Assign the speed at which we want it to move.
-      - We want the enemy to teleport to the curve and not the other way around.
-11. Add the already created DamageEmitter component to the list of DamageEmitters of the current State.
+  1. Create an object called Chicken by duplicating the BaseEnemy prefab located in Assets/Prefabs.
+  2. Change the *Sprite Renderer* to the chicken sprite located in Assets/Animations/Sprites/Chicken and adjust the Collider to match the image.
+  3. Configure the Damage Emitter:
+      - Active From Start: True
+      - Damage Type: Instant
+      - Destroy After Doing Damage: True
+      - Instant Kill: False
+      - Damage Amount: 1
+  4. Add a Spline Follower Actuator component and add it to the Actuator List of the State.
+  5. Create a Spline with a square shape and rotate it 90 degrees on the X-axis.
+  6. Flip the Spline to negative scale on the X-axis.
+  7. Configure the Spline Follower Actuator:
+      - Spline Container: Add the newly created spline as a reference
+      - Teleport to Closest Point: Enemy
+      - Is Accelerated: False
+      - Speed: 1
 
-Now let's add animations:
+  Now, let's adjust the animations:
 
-10. Add an AnimationManager component. You will see that when you do this, a Unity Animator component is also created.
-
-11. Configure the Animator Manager:
-      - We don't want it to flip on either the Y-axis or the X-axis.
-
-12. Duplicate the animation controller that comes as an example in Assets/Animations.
-
-13. Enter the Unity Animator Editor (by double-clicking on the controller you just created), where you will see many possible states. Since we only want the Idle animation, delete the rest (select with the mouse and press Delete).
-
-14. Click on the Idle state and drag the animation you want to use to Motion. In this case, we will use Opossumwolk, which is located in Assets/Animations/Anim.
-
-15. Add the controller you duplicated to the Animator that was created when you added the AnimatorManager.
+  8. Configure the Animator Manager:
+      - Can Flip X: False
+      - Can Flip Y: False
+  9. Duplicate the Animator Controller that was created as an example in Assets/Animations.
+  10. Open the Animation editor in Unity (by double-clicking the Animator Controller we just created). You’ll see many possible states. Since we only want the animations for Idle, Damage, and Die, delete the others (select them with the mouse and press delete).
+  11. Click on the Idle state and drag the animation you want to use into the Motion field; in this case, use Run from Assets/Animations/Sprites/Chicken.
+  12. Click on the Damage state and drag the animation you want to use into the Motion field; in this case, use Hit from Assets/Animations/Sprites/Chicken.
+  13. Add the duplicated controller to the Animator of the Chicken enemy.
 
 ### Fifth Example: Stalactites
 
 Finally, let's create a common enemy: stalactites.
-For the example, I will use the bird image:  
+For the example, we will use the bird image:  
+
 ![FatBird](./Manual/FatBird.png)
 
-1. Create an object starting from the FatBird sprite located in Assets/Animations/Sprites.
-2. Add a physics layer for the enemy (if not already created), for example, Enemy.
-3. Add a Box Collider 2D and a Rigidbody 2D component (freeze rotation in constraints).
-4. Add a Damage Emitter component.
-5. Indicate how you want the enemy to deal damage:
-      - We want it to deal damage from the start.
-      - That it is of the Instant type.
-      - That it directly kills the player.
-6. We are going to add actions, which are controlled by a state machine, so add an FSM component.
-7. Add a State component and assign it to the FSM in the Initial State.
-8. Add an element to the Sensor Transitions list. Fill it by creating and assigning a new state to the transition state.
-9. For the sensor that will activate the transition, let's create a 2D object containing:
-      - Box Collider 2D
-      - Area sensor, with a start time of 0 and the player as the target.
-10. For the second state, add a Vertical Actuator type actuator to the Actuator List.
-11. Configure the Vertical Actuator:
-      - We want it to be deleted upon collision.
-      - That it collides with the World and Player physics layers.
-      - That it does not follow the player.
-      - That it is neither accelerated nor a throw.
-      - That it has a speed of 13.
-12. Add the already created DamageEmitter component to the list of DamageEmitters of State two.
+  1. Create an object called FatBird based on the BaseEnemy prefab located in Assets/Prefabs.
+  2. Change the Sprite Renderer to the bird sprite found in Assets/Animations/Sprites/FatBird and adjust the Collider to match the image.
+  3. Configure the Damage Emitter:
+      - Active From Start: True
+      - Damage Type: Instant
+      - Destroy After Doing Damage: True
+      - Instant Kill: True
+  4. Freeze rotation in the Constraints section of the Rigidbody 2D component.
+  5. Add a new element to the Transition List in the State component (included by default in the BaseEnemy).
+  6. Create a new State component and assign it as the Target State for the element created in step 5.
+  7. For the sensor that will trigger the transition, create an empty 2D square object that includes:
+      - Box Collider 2D: Adjust it to the area where you want to detect the player’s entry.
+      - Area Sensor, configured as follows:
+        - Start Detecting Time: 0
+        - Target: Player (reference to the player)
+        - Detection Condition: Inside Magnitude (we want it to detect when the player enters the area)
+  8. Assign the Area Sensor you just configured to the Sensor field of the Transition List item created in step 5.
+  9. In the second State (the one without a transition, which you created), add an element to the Actuator List.
+  10. Create a Vertical Actuator and assign it:
+  11. Configure the Vertical Actuator:
+      - Reaction After Collision: Destroy
+      - Layers to Collide: World, Player
+      - Follow Player: False
+      - Direction: Down
+      - Is Accelerated: False
+      - Throw: False
+      - Speed: 10
+  12. Add the already existing DamageEmitter component to the DamageEmitter list of the second State.
 
-Now let's add animations:
+Now let’s adjust the animations:
 
-13. Add an AnimationManager component. You will see that when you do this, a Unity Animator component is also created.
-
-14. Configure the Animator Manager:
-      - We don't want it to flip on either the Y-axis or the X-axis.
-
-15. Duplicate the animation controller that comes as an example in Assets/Animations.
-
-16. Enter the Unity Animator Editor (by double-clicking on the controller you just created), where you will see many possible states. Since we only want the Idle, vertical movement, and die animations, delete the rest (select with the mouse and press Delete).
-
-17. Click on the Idle state and drag the animation you want to use to Motion. In this case, we will use IdleFatBird, which is located in Assets/Animations/Sprites.
-
-18. Click on the Die state and drag the animation you want to use to Motion. In this case, we will use GraundFatBird, which is located in Assets/Animations/Sprites.
-
-19. DOUBLE-click on the Vertical Movement state, delete the UP state, and in Down, drag the animation you want to use to Motion. In this case, we will use FallFatBird, which is located in Assets/Animations/Sprites.
-
-15. Add the controller you duplicated to the Animator that was created when you added the AnimatorManager.
+  13. Configure the Animator Manager:
+      - Can Flip X: False
+      - Can Flip Y: False
+  14. Duplicate the Animator Controller provided as an example in Assets/Animations.
+  15. Open the animation editor in Unity (by double-clicking the controller you just created). You’ll see many possible states — since we only need Idle, Vertical Movement, Damage, and Die, delete the rest (select with the mouse and press delete).
+  16. Inside Vertical Movement, we only want Down, so delete Up.
+  17. Click on the Idle state and drag the desired animation into the Motion field — use IdleFatBird found in Assets/Animations/Sprites/FatBird.
+  18. Click on the Die state and drag in the animation — use GroundFatBird from Assets/Animations/Sprites/FatBird.
+  19. Double-click on the Vertical Movement state, and in the Down sub-state drag in the FallFatBird animation found in Assets/Animations/Sprites.
+  20. Add the duplicated controller to the Animator component of the FatBird enemy.
 
 ## Troubleshooting
 
@@ -590,21 +581,39 @@ Section to answer common questions about the use of the software. TO BE FILLED I
 
 List of technical terms and their definitions to facilitate understanding of the manual:
 
-- ***Architecture:*** In this case, the architecture of a tool refers to how it is structured, what elements it uses, or how it is organized.
-- ***Workflow:*** It is the order or steps that must be completed in a task.
-- ***Finite State Machines (FSM):*** A Finite State Machine is a computational model used to design algorithms that describe the behavior of a system through a limited number of possible states and the transitions between those states. In the context of video game artificial intelligence, each state represents a specific behavior. Transitions between these states are activated by specific conditions, often generated by the enemy's interaction with its environment.
+- ***<a name="arquitectura"></a>Architecture:*** In this case, the architecture of a tool refers to how it is structured, what elements it uses, or how it is organized.
 
-- ***State:*** In a state machine, a state represents a situation in which an enemy can find itself at a given moment. It defines the enemy's actions while it remains in that state. For example, an enemy can be in an *Idle*, *Patrol*, *Attack*, etc.
+- ***<a name="flujo-de-trabajo"></a>Workflow:*** It is the order or steps that must be completed in a task.
 
-- ***Serialized:*** Allows modifying values without needing to change the code, by editing them from the Unity editor.
-- ***Transform:*** It is a Unity component that stores and manages the position, rotation, and scale of an object in the scene. It is fundamental for manipulating any object within the game world, as it allows moving, rotating, and scaling it.
+- ***<a name="fsm"></a>Finite State Machines (FSM):*** A Finite State Machine is a computational model used to design algorithms that describe the behavior of a system through a limited number of possible states and the transitions between those states. In the context of artificial intelligence in video games, each state represents a specific behavior. Transitions between these states are triggered by specific conditions, often generated by the enemy’s interaction with its environment.
 
-- ***Flip:*** to mirror the image.
+- ***<a name="estado"></a>State:*** In a state machine, a state represents a situation in which an enemy may find itself at a given moment. It defines the enemy’s actions while it remains in that state. For example, an enemy can be in Idle, Patrol, Attack, etc.
+
+- ***<a name="transform"></a>Transform:*** It is a Unity component that stores and manages the position, rotation, and scale of an object in the scene. It is essential for manipulating any object within the game world, as it allows it to be moved, rotated, and scaled.
+
+- ***<a name="flip"></a>Flip:*** To flip the image.
+
+- ***<a name="script"></a>Script:*** Code file that contains instructions to control the behavior of objects within Unity.
+
+- ***<a name="framework"></a>Framework:*** A structured set of tools, libraries, and rules that facilitate the development of games or applications.
+
+- ***<a name="prefab"></a>Prefab:*** Reusable template of a Unity object.
+
+- ***<a name="tag"></a>Tag:*** Identifier label assigned to an object to classify or recognize it easily in code.
+
+- ***<a name="collider"></a>Collider:*** Component that defines the invisible physical shape of an object in Unity.
+
+- ***<a name="capa-fisica"></a>Physics Layer:*** A physics layer in Unity is a label assignable to a GameObject that allows control over which other objects it can interact with.
+
+- ***<a name="sprite"></a>Sprite:*** A sprite is a type of 2D image used to represent characters, objects, backgrounds, or other visual elements.
+
+- ***<a name="sprite-renderer"></a>Sprite Renderer:*** The Sprite Renderer in Unity is a component used to draw (render) a sprite on an object, controlling its visual appearance, such as the image it displays, its color, materials...
 
 ## Contact and Support
 
 It is recommended to review example scenes and additional documentation from the developers.
-For additional technical support or to provide feedback on the tool, you can contact the developers directly through the following means: [crmora03@ucm.es](mailto:crmora03@ucm.es).
-
+For additional technical support or to provide feedback on the tool, you can contact the developers directly through the following means:
+  - [crmora03@ucm.es](mailto:crmora03@ucm.es).
+  - [fragalva@ucm.es](mailto:fragalva@ucm.es).
 ---
 © 2025 Cristina Mora Velasco and Francisco Miguel Galván Muñoz. All rights reserved.

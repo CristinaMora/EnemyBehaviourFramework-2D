@@ -205,12 +205,12 @@ Este actuador permite mover un objeto horizontalmente, ya sea a la izquierda o a
 
 - **Move To A Point Actuator**:  
 Hace que el enemigo se mueva hacia un punto fijo específico del escenario. Hay dos configuraciones dependiendo del *Usage Way*.
-  - *Random Area*: coge puntos aleatorios dentro de un área.
+  - *Random Area*: Coge puntos aleatorios dentro de un área.
 ![MoveToAPointActuator](./MoveToAPointActuatorA.png)
     - *Random Area:* [Collider](#collider) que servirá para la referencia del área.
     - *Time Between Random Points:* Cada cuánto cambia el punto a otro distinto.
   - *Waypoint*: Indica que queremos seguir un camino predeterminado de puntos.
-    - *Loop:* Indica si queremos que al llegar al final de los waypoints, se vuelva a iniciar la lista.
+    - *Is A Cycle:* Indica si queremos que al llegar al final de los waypoints, se vuelva a iniciar la lista.
     - *Same Waypoint Behaviour:* Indica si queremos que el comportamiento sea el mismo para todos los waypoints.
       - Si es así, se creará un panel único de especificación de puntos:  
 ![MoveToAPointActuator](./MoveToAPointActuatorS.png)  
@@ -263,7 +263,7 @@ Los sensores permiten detectar información del entorno y activar transiciones.
 
 - **Distance Sensor:**  
 ![DistanceSensor](./DistanceSensor.png)  
-  Detecta cuando un objeto específico (Target) está a una *determinada distancia del enemigo*.
+  Detecta cuando un objeto específico *Target* está a una *determinada distancia del enemigo*.<br>
   - *Distance type:* Tipo de distancia que se quiere comprobar.
     - Magnitud: 360 grados de detección.
     - Single Axis: Un único eje.
@@ -288,9 +288,9 @@ Los sensores permiten detectar información del entorno y activar transiciones.
   - **Instant:**  
   ![DamageEmitter](./DamageEmitter.png)  
   Daño instantáneo que afecta una única vez al entrar en contacto.  
-    - *Destroy After Doing Damage:* Permite indicar si queremos que el objeto desaparezca tras hacer daño.  
-    - *Instant Kill:* Permite indicar si queremos que mate directamente a la entidad con la que colisiona.  
-    - *Damage Amount:* En caso de no querer eliminar ni matar, se indica el daño que queremos aplicar.
+    - *Destroy After Doing Damage:* Indica si queremos que el objeto desaparezca tras hacer daño.  
+    - *Instant Kill:*Indica si queremos que elimine directamente a la entidad con la que colisiona.  
+    - *Damage Amount:* En caso de no querer eliminar directamente a la entidad colisionada, se indica el daño que queremos aplicar.
 
   - **Permanence:**  
   ![DamageEmitterP](./DamageEmitterP.png)  
@@ -351,6 +351,7 @@ Para crear una nueva escena desplegar el menú de File, New Scene, seleccionar B
 La escena cuenta con un jugador y un mundo listos para funcionar.
 
 **AVISO**: En los ejemplos, cuando se dice borrar todos los estados del Animator, se refiere a los que no son propios de Unity, es decir, los que aparecen en color Gris. Los estados propios de Unity seguirán apareciendo aunque se intenten borrar.  
+
 **Aviso sobre el Arte:** El material gráfico utilizado principalmente en este framework ha sido obtenido del Asset Store de Unity y pertenece al creador Pixel Frog, cuya página de itch.io es: [https://pixelfrog-assets.itch.io/](https://pixelfrog-assets.itch.io/)  
 El águila y efectos de items son de:
 <https://assetstore.unity.com/packages/2d/characters/sunny-land-103349>
@@ -368,9 +369,10 @@ Para el ejemplo usaremos la imagen de los pinchos:
  4. Elimina el AnimatorManager y Animator, en este caso no son necesarios porque el objeto no tiene animación.
  5. Configuramos el Damage Emitter:  
      - Active From Start: True
-     - Damage Type: Instant
+     - Damage Type: Permanence
      - Destroy After Doing Damage: False
-     - Instant Kill: True
+     - Damage Amount: 1
+     - Damage Cooldown: 2
 
 ### Segundo Ejemplo: Deambulador
 
@@ -405,7 +407,7 @@ Para el ejemplo usaremos la imagen del conejo:
  9. Entramos en el editor de animaciones de Unity (haciendo doble click sobre el *Animator Controller* que acabamos de crear), donde veremos muchos estados posibles, como solo queremos que haga las animaciones: Movimiento Horizontal, Damage y Die, borraremos el resto de estados (seleccionamos con el ratón y pulsamos suprimir).
  10. Hacemos click sobre el estado Horizontal Movement y arrastramos la animación que queremos hacer hasta *Motion*, en este caso vamos a usar *Run* que se encuentra en Assets/Animations/Sprites/Bunny.
  11. Hacemos click sobre el estado Damage y arrastramos la animación que queremos hacer hasta Motion, en este caso vamos a usar Hit que se encuentra en Assets/Animations/Sprites/Bunny.
- 12. Hacemos Click sobre el estado Die y arrastramos la animación que queremos hacer hasta Motion, en este caso vamos a usar Hit que se encuentra en Assets/Animations/Sprites/Bunny.
+ 12. Hacemos click sobre el estado Die y arrastramos la animación que queremos hacer hasta Motion, en este caso vamos a usar Hit que se encuentra en Assets/Animations/Sprites/Bunny.
  13. Añadimos el controlador que hemos duplicado al Animator del enemigo deambulador.
 
 ### Tercer Ejemplo: Torreta + balas
@@ -513,26 +515,26 @@ Para el ejemplo usaremos la imagen del pájaro:
 
 ![FatBird](./FatBird.png)
 
- 1. Crea un objeto llamado FatBird partiendo del prefab BaseEnemy que se encuentra en Assets/Prefabs.
- 2. Cambia el *Sprite Renderer* al del pájaro que se encuentam en Assets/Animations/Sprites/FatBird y ajusta el Collider a la imagen.
- 3. Configuramos el Damage Emitter:  
-     - Active From Start: True
-     - Damage Type: Instant
-     - Destroy After Doing Damage: True
-     - Insta Kill: True
- 4. Congela la rotación en Constraints del Rigidbody 2D.
- 5. Añadimos un elemento a Transition List del componente State que viene por defecto en el BaseEnemy.
- 6. Crear un nuevo componente State y asignarlo como Target State  del elemento creado en el punto 5.
- 7. Para el sensor que activará la transición, vamos a crear un objeto 2D cuadrado vacío que contenga:
+  1. Crea un objeto llamado FatBird partiendo del prefab BaseEnemy que se encuentra en Assets/Prefabs.
+  2. Cambia el *Sprite Renderer* al del pájaro que se encuentam en Assets/Animations/Sprites/FatBird y ajusta el Collider a la imagen.
+  3. Configuramos el Damage Emitter:  
+      - Active From Start: True
+      - Damage Type: Instant
+      - Destroy After Doing Damage: True
+      - Instant Kill: True
+  4. Congela la rotación en Constraints del Rigidbody 2D.
+  5. Añadimos un elemento a Transition List del componente State que viene por defecto en el BaseEnemy.
+  6. Crear un nuevo componente State y asignarlo como Target State  del elemento creado en el punto 5.
+  7. Para el sensor que activará la transición, vamos a crear un objeto 2D cuadrado vacío que contenga:
     - Box Collider 2D: Ajustar el Collider al área donde queremos que detecte que entra el jugador.
     - Area Sensor, configurada como:
       - Start Detecting Time: 0
       - Target: Player (referencia al jugador)
       - Detection Condition: Inside Magnitude (queremos que detecte cuando entra en ese área)
- 8. Asignar a Sensor de Transition List creada en el punto 5 el Area Sensor que acabamos de configurar.
- 9. Añadimos en el segundo State (el que no tiene transición y hemos creado nosotros) un elemento en Actuator List.
- 10. Creamos un Vertical Actuator y se lo asignamos.
- 11. Configuramos el Vertical Actuator:  
+  8. Asignar a Sensor de Transition List creada en el punto 5 el Area Sensor que acabamos de configurar.
+  9. Añadimos en el segundo State (el que no tiene transición y hemos creado nosotros) un elemento en Actuator List.
+  10. Creamos un Vertical Actuator y se lo asignamos.
+  11. Configuramos el Vertical Actuator:  
     - Reaction After Collision: Destroy  
     - Layers to Collide: World, Player  
     - Follow Player: False  
@@ -540,21 +542,20 @@ Para el ejemplo usaremos la imagen del pájaro:
     - Is Accelerated: False  
     - Throw: False  
     - Speed: 10  
-
- 12. Añadimos el componente DamageEmitter ya creado a la lista de DamageEmitter del segundo State.
+  12. Añadimos el componente DamageEmitter ya creado a la lista de DamageEmitter del segundo State.
 
 Ahora vamos a ajustar las animaciones:
 
- 13. Configuramos el Animator Manager:  
+  13. Configuramos el Animator Manager:  
       - Can Flip X: False
       - Can Flip Y: False
-  15. Duplicamos el *Animator Controller* que viene creado como ejemplo en Assets/Animations.
-  16. Entramos en el editor de animaciones de Unity (haciendo doble click sobre el controller que acabamos de crear), donde veremos muchos estados posibles, como solo queremos que haga la animación de Idle, Vertical Movement, Damage y Die borramos el resto (selecionamos con el ratón y pulsamos suprimir).
-  17. Dentro de Vertical Movement, solo queremos Down, por lo que podemos borrar Up.
-  18. Hacemos click sobre el estado Idle y arrastramos la animación que queremos hacer hasta Motion, en este caso vamos a usar IdleFatBird que se encuentra en Assets/Animations/Sprites/FatBird.
-  19. Hacemos click sobre el estado Die y arrastramos la animación que queremos hacer hasta Motion, en este caso vamos a usar GraundFatBird que se encuentra en Assets/Animations/Sprites/FatBird.
-  20. Hacemos doble click sobre el estado Vertical Movement, en Down arrastramos la animación que queremos hacer hasta Motion, en este caso vamos a usar Fall FatBird que se encuentra en Assets/Animations/Sprites.
-  21. Añadimos el controlador que hemos duplicado al Animator del enemigo FatBird.
+  14. Duplicamos el *Animator Controller* que viene creado como ejemplo en Assets/Animations.
+  15. Entramos en el editor de animaciones de Unity (haciendo doble click sobre el controller que acabamos de crear), donde veremos muchos estados posibles, como solo queremos que haga la animación de Idle, Vertical Movement, Damage y Die borramos el resto (selecionamos con el ratón y pulsamos suprimir).
+  16. Dentro de Vertical Movement, solo queremos Down, por lo que podemos borrar Up.
+  17. Hacemos click sobre el estado Idle y arrastramos la animación que queremos hacer hasta Motion, en este caso vamos a usar IdleFatBird que se encuentra en Assets/Animations/Sprites/FatBird.
+  18. Hacemos click sobre el estado Die y arrastramos la animación que queremos hacer hasta Motion, en este caso vamos a usar GraundFatBird que se encuentra en Assets/Animations/Sprites/FatBird.
+  19. Hacemos doble click sobre el estado Vertical Movement, en Down arrastramos la animación que queremos hacer hasta Motion, en este caso vamos a usar Fall FatBird que se encuentra en Assets/Animations/Sprites.
+  20. Añadimos el controlador que hemos duplicado al Animator del enemigo FatBird.
 
 ## Solución de Problemas
 
