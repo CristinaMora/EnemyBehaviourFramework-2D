@@ -101,7 +101,7 @@ Step-by-step installation:
 Actuators are components that allow enemies to perform actions. These actions define the movement or creation of other enemies.
 We have 7 types of actuators:
 
-- **Spawner Actuator**:
+- **Spawner Actuator**:  
 ![SpawnerActuator](./Manual/SpawnerActuator.png)  
   Allows generating (spawning) new enemies.
   - *Infinite Enemies:* if you want to create infinite enemies, otherwise you must specify the number of times you want to spawn the list.
@@ -111,7 +111,7 @@ We have 7 types of actuators:
 
   Being a list, you can spawn more than one object at a time.
 
-- **Horizontal Actuator**:
+- **Horizontal Actuator**:  
 ![HorizontalActuator](./Manual/HorizontalActuator.png)  
 This actuator allows moving an object horizontally, either to the left or to the right, with different speed and behavior configurations after a collision. It has different configurations.
 
@@ -155,7 +155,7 @@ This actuator allows moving an object horizontally, either to the left or to the
       - *Interpolation Time:* This is the time it takes for the object to go from actual speed to it's target speed.
       - *Easing Function:* Defines how the acceleration behaves.
 
-- **Directional Actuator**:
+- **Directional Actuator**:  
 ![DirectionalActuator](./Manual/DirectionalActuator.png)  
   Makes the enemy move in a specific direction described by an angle.
   - *Reaction After Collision*
@@ -199,22 +199,22 @@ This actuator allows moving an object horizontally, either to the left or to the
       - *Interpolation Time:* This is the time it takes for the object to go from speed 0 to its target speed.
       - *Easing Function:* Defines how the acceleration behaves.
 
-- **Move to a Point Actuator**:
+- **Move to a Point Actuator**:  
 Makes the enemy move towards a specific fixed point in the scene. There are two configurations depending on *Use Way*:
-  - *Random Area*: Picks random points within an area.
-![MoveToAPointActuator](./Manual/MoveToAPointActuatorA.png)
+  - *Random Area*: Picks random points within an area.  
+![MoveToAPointActuator](./Manual/MoveToAPointActuatorA.png)  
     - *Random Area:* [Collider](#collider) that will serve as the area reference.
     - *Time Between Random Points:* How often the point changes to a different one.
   - *Waypoint*: Indicates that we want to follow a predetermined path of points.
     - *Is A Cycle:* Indicates whether we want the list to restart when reaching the end of the waypoints.
     - *Same Waypoints Behaviour:* Indicates whether we want the behavior to be the same for all waypoints.
-      - If so, a single point specification panel will be created:
-![MoveToAPointActuator](./Manual/MoveToAPointActuatorS.png)
+      - If so, a single point specification panel will be created:  
+![MoveToAPointActuator](./Manual/MoveToAPointActuatorS.png)  
         - *Time Between Waypoints:* Time taken between one point and another.
         - *Are Accelerated:* Whether the movement is accelerated or not. If so, an easing function will appear indicating the acceleration.
         - *Should Stop:* Indicates whether to stop upon reaching a point. If it should stop, specify the duration.
-      - If not, the same data will appear for each waypoint.
-    ![MoveToAPointActuator](./Manual/MoveToAPointActuator.png)
+      - If not, the same data will appear for each waypoint.  
+    ![MoveToAPointActuator](./Manual/MoveToAPointActuator.png)  
 
 - **Move to an Object Actuator**:  
 ![MoveToAnObjectActuator](./Manual/MoveToAnObjectActuator.png)  
@@ -223,10 +223,10 @@ Makes the enemy move towards a specific fixed point in the scene. There are two 
   - *Time to Reach:* Time it takes to reach the target.
   - *Is Accelerated:*
     - *False:* If not accelerated, the position will change constantly.
-    - *True:* If accelerated, the position will be defined by the easing function.
-    ![MoveToAnObjectActuator](./Manual/MoveToAnObjectActuatorA.png)
-- **Spline Follower Actuator**:
-![SpllineFollowerActuator](./Manual/Spline.png)
+    - *True:* If accelerated, the position will be defined by the easing function.  
+    ![MoveToAnObjectActuator](./Manual/MoveToAnObjectActuatorA.png)  
+- **Spline Follower Actuator**:  
+![SpllineFollowerActuator](./Manual/Spline.png)  
   Makes the enemy automatically move and rotate following a path defined by a spline.
   - *Spline Container:* Transform of the object to be chased.
   - *Speed:* Time it takes to reach the target.
@@ -244,21 +244,24 @@ We have five sensors:
 
 - **Area Sensor:**  
  ![AreaSensor](./Manual/AreaSensor.png)  
- The area sensor detects when a specific object enters its detection zone.<br>
+ The area sensor detects when a specific object enters its detection zone.
+
   - *Start Detecting Time:* Delay time until detection starts.
   - *Target:* Object to be detected.
   - *Detection Condition:* Indicates whether to detect when leaving or entering the area.
 
 - **Collision Sensor:**  
  ![CollisionSensor](./Manual/CollisionSensor.png)  
- Detects when the enemy physically collides with another object. Unlike the *Area Sensor*, this requires an actual collision rather than just detecting presence within an area.<br>
+ Detects when the enemy physically collides with another object. Unlike the *Area Sensor*, this requires an actual collision rather than just detecting presence within an area.
+
   You must specify which *[physics layers](#capa-fisica)* activate the sensor.
   - *Start Detecting Time:* Delay time until detection starts.
   - *Layers to Collide:* Physics layer mask indicating what we want to collide with.
 
 - **Distance Sensor:**  
 ![DistanceSensor](./Manual/DistanceSensor.png)  
- Detects when a specific object *Target* is at a *certain distance from the enemy*.<br>
+ Detects when a specific object *Target* is at a *certain distance from the enemy*.
+
   - *Distance type:* Type of distance to check.
     - Magnitude: 360 degrees of detection.
     - Single Axis: A single axis.
@@ -272,29 +275,30 @@ We have five sensors:
  Detects when a specific time elapses.
   - *Start Detecting Time:* Delay time until detection starts.
   - *Detection Time:* Detection time.
-- **Damage Sensor:**
+- **Damage Sensor:**  
 ![DamageSensor](./Manual/DamageSensor.png)  
  Detects when an entity *receives damage*.
- This sensor is used to manage the *life* of both enemies and the player.<br> For damage to be received, *Active From Start* must be set to true.
+ This sensor is used to manage the *life* of both enemies and the player.
+ For damage to be received, *Active From Start* must be set to true.
 
 - **Damage Emitter**:
   It is responsible for *dealing damage*. You need to specify the type of damage, and each type of damage has its own parameters:
 
-  - **Instant:**
-  ![DamageEmitter](./Manual/DamageEmitter.png)
+  - **Instant:**  
+  ![DamageEmitter](./Manual/DamageEmitter.png)  
   Instant damage that affects only once upon contact.
     - *Destroy After Doing Damage:* Allows indicating whether the object should disappear after dealing damage.
     - *Instant Kill:* Allows indicating whether to directly kill the entity it collides with.
     - *Damage Amount:* If you don't want to instantly eliminate the entity it collides with, indicate the damage to be applied.
 
-  - **Permanence:**
-  ![DamageEmitterP](./Manual/DamageEmitterP.png)
+  - **Permanence:**  
+  ![DamageEmitterP](./Manual/DamageEmitterP.png)  
   Damage over time that affects while you are inside the object.
     - *Damage Amount:* Amount of health subtracted each time.
     - *Damage Cooldown:* Time interval between each damage application.
 
-  - **Residual:**
-  ![DamageEmitterR](./Manual/DamageEmitterR.png)
+  - **Residual:**  
+  ![DamageEmitterR](./Manual/DamageEmitterR.png)  
   Residual damage continues to affect even when you are no longer in contact.
     - *Destroy After Doing Damage:* Allows indicating whether the object should be destroyed after the first hit.
     - *Instant Damage Amount:* Initial damage applied upon first contact.
@@ -304,8 +308,8 @@ We have five sensors:
 
 ### State
 
-A state is a specific behavior that an enemy can have at a certain time. States are responsible for storing actions.
- ![State](./Manual/State.png)
+A state is a specific behavior that an enemy can have at a certain time. States are responsible for storing actions.  
+ ![State](./Manual/State.png)  
  Makes the enemy automatically move and rotate following a path defined by a spline.
 
 - *Actuator List:* Action/actions we are going to perform.
@@ -315,7 +319,7 @@ A state is a specific behavior that an enemy can have at a certain time. States 
 
 ### Finite State Machine (FSM)
 
- ![FSM](./Manual/FSM.png)
+ ![FSM](./Manual/FSM.png)  
  The FSM organizes an enemy's behavior into **states** (Idle, Patrol, Attack, etc.). This component is responsible for calling and managing all the states of an enemy.
 
 - *Initial State:* the enemy's initial state.
@@ -332,7 +336,7 @@ It is important that all [sprites}(#sprite) intended for use *face to the right*
 
 ### Life
 
-Manages the life of objects.
+Manages the life of objects.  
  ![Life](./Manual/Life.png)
 
 - *Initial Life:* Initial health.
@@ -613,7 +617,9 @@ List of technical terms and their definitions to facilitate understanding of the
 
 It is recommended to review example scenes and additional documentation from the developers.
 For additional technical support or to provide feedback on the tool, you can contact the developers directly through the following means:
-  - [crmora03@ucm.es](mailto:crmora03@ucm.es).
-  - [fragalva@ucm.es](mailto:fragalva@ucm.es).
+
+- [crmora03@ucm.es](mailto:crmora03@ucm.es).
+- [fragalva@ucm.es](mailto:fragalva@ucm.es).
+
 ---
 © 2025 Cristina Mora Velasco and Francisco Miguel Galván Muñoz. All rights reserved.
