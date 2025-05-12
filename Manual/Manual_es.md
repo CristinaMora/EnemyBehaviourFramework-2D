@@ -535,13 +535,13 @@ Para el ejemplo usaremos la imagen del pájaro:
   9. Añadimos en el segundo State (el que no tiene transición y hemos creado nosotros) un elemento en Actuator List.
   10. Creamos un Vertical Actuator y se lo asignamos.
   11. Configuramos el Vertical Actuator:  
-    - Reaction After Collision: Destroy  
-    - Layers to Collide: World, Player  
-    - Follow Player: False  
-    - Direction: Down  
-    - Is Accelerated: False  
-    - Throw: False  
-    - Speed: 10  
+      - Reaction After Collision: Destroy  
+      - Layers to Collide: World, Player  
+      - Follow Player: False  
+      - Direction: Down  
+      - Is Accelerated: False  
+      - Throw: False  
+      - Speed: 10  
   12. Añadimos el componente DamageEmitter ya creado a la lista de DamageEmitter del segundo State.
 
 Ahora vamos a ajustar las animaciones:
