@@ -22,8 +22,8 @@ public class SplineFollowerActuator : MovementActuator
     // Option to decide if the object or the spline moves to match the closest point
     private enum TeleportToClosestPoint
     {
-        Enemy = 0,
-        Spline = 1
+        MoveEnemyToSpline = 0,
+        MoveSplineToEnemy = 1
     }
 
     [Tooltip("Reference to the Spline Container that the object will follow.")]
@@ -31,7 +31,7 @@ public class SplineFollowerActuator : MovementActuator
 
 
     [Tooltip("Defines whether the enemy teleports to the spline or moves the spline to the enemy.")]
-    [SerializeField] private TeleportToClosestPoint _teleportToClosestPoint = TeleportToClosestPoint.Spline;
+    [SerializeField] private TeleportToClosestPoint _teleportToClosestPoint = TeleportToClosestPoint.MoveSplineToEnemy;
 
     private Rigidbody2D _rb;
     private float _distancePercentage = 0f;
@@ -62,13 +62,13 @@ public class SplineFollowerActuator : MovementActuator
         // Handle teleporting based on selected mode
         switch (_teleportToClosestPoint)
         {
-            case TeleportToClosestPoint.Enemy:
+            case TeleportToClosestPoint.MoveEnemyToSpline:
                 // Move the object to the spline
                 Vector3 currentPosition = _splineContainer.EvaluatePosition(_distancePercentage);
                 transform.position = new Vector3(currentPosition.x, currentPosition.y, 0);
                 break;
 
-            case TeleportToClosestPoint.Spline:
+            case TeleportToClosestPoint.MoveSplineToEnemy:
                 // Move the spline to align with the object without deforming it
                 Vector3 closestPoint = _splineContainer.EvaluatePosition(_distancePercentage);
                 Vector3 offset = transform.position - closestPoint;

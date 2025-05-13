@@ -519,12 +519,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isAccelerated: 0
   _easingFunction: 0
-  _waypointData:
-    waypoint: {fileID: 1869074456}
-    timeToReach: 2
-    isAccelerated: 1
-    shouldStop: 0
-    easingFunction: 0
+  _objectPosition: {fileID: 1869074456}
+  _timeToReach: 2
 --- !u!114 &307179857
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -560,7 +556,6 @@ MonoBehaviour:
   _startDetectingTime: 3
   _distanceType: 0
   _axis: 1
-  _partOfAxis: 0
   _detectionSide: 0
   _target: {fileID: 1869074445}
   _detectionDistance: 5.09
@@ -632,11 +627,17 @@ MonoBehaviour:
   _shouldThemStop: 0
   _stopTime: 0
   _easingFunctionForAllWaypoints: 0
-  _usageWay: 1
-  _waypointsData: []
+  _mode: 1
+  _waypointsData:
+  - waypoint: {fileID: 0}
+    timeToReach: 0
+    isAccelerated: 1
+    shouldStop: 1
+    stopDuration: 0
+    easingFunction: 0
   _randomArea: {fileID: 533422646}
   _loop: 0
-  _allWaypointsHaveTheSameData: 1
+  _allWaypointsHaveTheSameData: 0
   _ciclicWaypointAdded: 0
   _timeBetweenRandomPoints: 0.8
 --- !u!114 &307179863

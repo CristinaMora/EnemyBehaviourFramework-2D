@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 // Credits to Mix and Jam
-public class PlayerBetterJumping : MonoBehaviour
+public class PlayerJump : MonoBehaviour
 {
 	private Rigidbody2D rb;
 	public float fallMultiplier = 2.5f;

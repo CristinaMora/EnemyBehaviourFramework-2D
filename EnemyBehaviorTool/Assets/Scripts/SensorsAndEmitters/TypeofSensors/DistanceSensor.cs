@@ -26,23 +26,17 @@ public class DistanceSensor : Sensor
         X = 1  // Measure distance along the X-axis
     };
 
-    // Part of the axis for single-axis detection
-    public enum PartOfAxis
-    {
-        UpOrLeft = 0,   // Detect targets above or to the left
-        DownOrRight = 1 // Detect targets below or to the right
-    };
+	// Detection side configuration
+	public enum DetectionSide
+	{
+		Both = 0,       // Detect on both directions along the axis
+		Negative = 1,   // Detect only in negative direction (left or down)
+		Positive = 2    // Detect only in positive direction (right or up)
+	}
 
-    // Detection side configuration
-    public enum DetectionSide
-    {
-        Both = 0,  // Detect on both sides of the axis
-        Single = 1 // Detect on one side of the axis
-    };
 
-    [SerializeField] private TypeOfDistance _distanceType = TypeOfDistance.Magnitude; // Default distance type
+	[SerializeField] private TypeOfDistance _distanceType = TypeOfDistance.Magnitude; // Default distance type
     [SerializeField] private Axis _axis = Axis.X; // Default axis for single-axis detection
-    [SerializeField] private PartOfAxis _partOfAxis = PartOfAxis.UpOrLeft; // Default part of axis
     [SerializeField] private DetectionSide _detectionSide = DetectionSide.Both; // Default detection side
 
     [SerializeField]
@@ -89,21 +83,17 @@ public class DistanceSensor : Sensor
                 break;
 
             case TypeOfDistance.SingleAxis:
-                // Check distance along a single axis
-                float distance = (_axis == Axis.X)
-                    ? Mathf.Abs(selfPos.x - targetPos.x)
-                    : Mathf.Abs(selfPos.y - targetPos.y);
+				float delta = (_axis == Axis.X) ? (targetPos.x - selfPos.x) : (targetPos.y - selfPos.y);
+				float absDelta = Mathf.Abs(delta);
 
-                // Verify if the target is on the correct side
-                bool correctSide = _detectionSide == DetectionSide.Both ||
-                   (_axis == Axis.X
-                       ? (_partOfAxis == PartOfAxis.UpOrLeft ? targetPos.x < selfPos.x : targetPos.x > selfPos.x)
-                       : (_partOfAxis == PartOfAxis.UpOrLeft ? targetPos.y > selfPos.y : targetPos.y < selfPos.y));
+				bool correctSide = _detectionSide == DetectionSide.Both
+					|| (_detectionSide == DetectionSide.Negative && delta < 0)
+					|| (_detectionSide == DetectionSide.Positive && delta > 0);
 
-                bool isWithinSingleAxis = distance <= _detectionDistance && correctSide;
-                detected = (_detectionCondition == DetectionCondition.InsideMagnitude) ? isWithinSingleAxis : !isWithinSingleAxis;
-                break;
-        }
+				bool inRange = absDelta <= _detectionDistance && correctSide;
+				detected = (_detectionCondition == DetectionCondition.InsideMagnitude) ? inRange : !inRange;
+				break;
+		}
 
         // Trigger the detection event if the condition is met
         if (detected)
@@ -129,7 +119,7 @@ public class DistanceSensor : Sensor
 
             case TypeOfDistance.SingleAxis:
                 Vector3 size;
-                Vector3 positionOffset = Vector3.zero;
+                Vector3 offset = Vector3.zero;
 
                 if (_axis == Axis.X)
                 {
@@ -139,11 +129,11 @@ public class DistanceSensor : Sensor
                     }
                     else
                     {
-                        size = new Vector3(_detectionDistance, 10, 1); // Half width on one side
-                        positionOffset = new Vector3(
-                            _partOfAxis == PartOfAxis.UpOrLeft ? -_detectionDistance / 2 : _detectionDistance / 2,
-                            0, 0);
-                    }
+						size = new Vector3(_detectionDistance, 10, 1);
+						offset.x = (_detectionSide == DetectionSide.Negative)
+							? -_detectionDistance / 2
+							: _detectionDistance / 2;
+					}
                 }
                 else // Axis.Y
                 {
@@ -153,15 +143,15 @@ public class DistanceSensor : Sensor
                     }
                     else
                     {
-                        size = new Vector3(10, _detectionDistance, 1); // Half height on one side
-                        positionOffset = new Vector3(
-                            0, _partOfAxis == PartOfAxis.UpOrLeft ? _detectionDistance / 2 : -_detectionDistance / 2,
-                            0);
-                    }
+						size = new Vector3(10, _detectionDistance, 1);
+						offset.y = (_detectionSide == DetectionSide.Positive)
+							? _detectionDistance / 2
+							: -_detectionDistance / 2;
+					}
                 }
 
                 // Draw the detection range as a rectangle
-                Gizmos.DrawCube(transform.position + positionOffset, size);
+                Gizmos.DrawCube(transform.position + offset, size);
                 break;
         }
 #endif

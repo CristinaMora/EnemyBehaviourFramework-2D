@@ -24,7 +24,7 @@ public class SpawnerActuator : Actuator
     private int _numofTimesToSpawn = 0; // Total number of enemies to spawn if not infinite
 
     [SerializeField]
-    private List<SpawnInfo> _spawnList = new List<SpawnInfo>(); // List of spawn points and prefabs
+    private List<SpawnInfo> _spawnPoints = new List<SpawnInfo>(); // List of spawn points and prefabs
 
     private Timer _timer; // Controls time between spawns
     private int _numofTimeSpawned; // Tracks how many enemies have been spawned
@@ -63,7 +63,7 @@ public class SpawnerActuator : Actuator
     public void Spawn()
     {
         // Spawn each prefab at its corresponding spawn point
-        foreach (var spawnInfo in _spawnList)
+        foreach (var spawnInfo in _spawnPoints)
         {
             if (spawnInfo._prefabToSpawn != null && spawnInfo._spawnPoint != null)
             {

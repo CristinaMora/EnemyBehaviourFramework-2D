@@ -5,21 +5,14 @@ public class MoveToAnObjectActuator : MovementActuator
 {
     const float ALMOST_REACHED_ONE = 0.995f; // Threshold to consider the interpolation as complete
 
-    // Struct representing data for each waypoint
-    [System.Serializable]
-    public struct WaypointData
-    {
-        public Transform waypoint;              // Reference to the waypoint's transform
-        public float timeToReach;               // Time it takes to reach this point
-        public bool isAccelerated;              // If the speed is not constant
-        public bool shouldStop;
-        [SerializeField, HideInInspector]
-        public EasingFunction.Ease easingFunction;  // Type of easing used
-    }
 
- 
-    [SerializeField, Tooltip("Configure the waypoint with time, acceleration and easing function")]
-    private WaypointData _waypointData;
+
+    [SerializeField]
+    private Transform _objectPosition;
+
+    [SerializeField]
+    private float _timeToReach;
+
 
     private Rigidbody2D _rb;
     private bool _moving;
@@ -38,9 +31,9 @@ public class MoveToAnObjectActuator : MovementActuator
         _moving = true;
 
         // Validate the waypoint is set
-        if (_waypointData.waypoint == null)
+        if (_objectPosition == null)
         {
-            Debug.LogError($"MoveToAnObject error in {name}: No waypoint assigned.");
+            Debug.LogError($"MoveToAnObject error in {name}: No object assigned.");
 
         }
         else
@@ -57,12 +50,12 @@ public class MoveToAnObjectActuator : MovementActuator
     // Called every frame if is in the actual State
     public override void UpdateActuator()
     {
-        if (!_moving || _waypointData.waypoint == null)
+        if (!_moving || _objectPosition == null)
             return;
 
         // Move toward the target if it's set
-        if (_waypointData.waypoint.position != null)
-            MoveTowardsTarget(_waypointData, _waypointData.waypoint.position);
+        if (_objectPosition.position != null)
+            MoveTowardsTarget(_objectPosition.position);
         else
         {
             Debug.LogWarning("The MoveToAnObjectActuator goal Transform is null");
@@ -70,15 +63,15 @@ public class MoveToAnObjectActuator : MovementActuator
     }
 
     // Handles the interpolation and movement logic toward the target
-    private void MoveTowardsTarget(WaypointData waypoint, Vector2 targetPos)
+    private void MoveTowardsTarget(Vector2 targetPos)
     {
         _travelElapsedTime += Time.deltaTime;
-        _t = _travelElapsedTime / waypoint.timeToReach;
+        _t = _travelElapsedTime / _timeToReach;
 
         // Apply easing if enabled
-        if (waypoint.isAccelerated)
+        if (_isAccelerated)
         {
-            _t = EasingFunction.GetEasingFunction(waypoint.easingFunction)(0, 1, _t);
+            _t = EasingFunction.GetEasingFunction(_easingFunction)(0, 1, _t);
             if (_t >= ALMOST_REACHED_ONE)
                 _t = 1f;
         }
@@ -88,7 +81,7 @@ public class MoveToAnObjectActuator : MovementActuator
         _rb.MovePosition(newPosition);
 
         // If movement completed stop movement
-        if ((_t >= 1f && !waypoint.shouldStop) || waypoint.waypoint == null)
+        if (_t >= 1f || _objectPosition == null)
         {
             _moving = false;
         }
@@ -102,10 +95,10 @@ public class MoveToAnObjectActuator : MovementActuator
     private void OnDrawGizmos()
     {
         if (!_debugActuator) return;
-        if (_waypointData.waypoint != null)
+        if (_objectPosition != null)
         {
             Gizmos.color = new Color(1f, 0.5f, 0f);
-            Gizmos.DrawSphere(_waypointData.waypoint.position, 0.2f);
+            Gizmos.DrawSphere(_objectPosition.position, 0.2f);
         }
     }
 }

@@ -6,7 +6,7 @@ public class MoveToAPoint_ActuatorEditor : ActuatorEditor
 {
 	private SerializedProperty _waypointsData;
 	private SerializedProperty _isALoop;
-	private SerializedProperty _usageWay;
+	private SerializedProperty _mode;
 	private SerializedProperty _randomArea;
 	private SerializedProperty _timeBetweenRandomPoints;
 	private SerializedProperty _allWaypointsHaveTheSameData;
@@ -29,7 +29,7 @@ public class MoveToAPoint_ActuatorEditor : ActuatorEditor
 	private static readonly GUIContent _shouldThemStopLabel = new GUIContent("Should Stop", "Indicates whether the enemy should stop upon reaching each waypoint.");
 	#endregion
 
-	private static readonly GUIContent _usageWayLabel = new GUIContent("Usage Way", "How will the waypoints be set?\n" +
+	private static readonly GUIContent _modeLabel = new GUIContent("Mode", "How will the waypoints be set?\n" +
 		"Random Area: A collider will be given and the waypoints will be generated inside it.\n" +
 		"Waypoint: A sequence of waypoints will be given from start.\n");
 	private static readonly GUIContent _randomAreaLabel = new GUIContent("Random Area", "Area that will describe where the next waypoints will be generated.");
@@ -50,7 +50,7 @@ public class MoveToAPoint_ActuatorEditor : ActuatorEditor
 	{
 		_waypointsData = serializedObject.FindProperty("_waypointsData");
 		_isALoop = serializedObject.FindProperty("_loop");
-		_usageWay = serializedObject.FindProperty("_usageWay");
+		_mode = serializedObject.FindProperty("_mode");
 		_randomArea = serializedObject.FindProperty("_randomArea");
 		_timeBetweenRandomPoints = serializedObject.FindProperty("_timeBetweenRandomPoints");
 		_allWaypointsHaveTheSameData = serializedObject.FindProperty("_allWaypointsHaveTheSameData");
@@ -67,8 +67,8 @@ public class MoveToAPoint_ActuatorEditor : ActuatorEditor
 	public override void OnInspectorGUI()
 	{
 		serializedObject.Update();
-		EditorGUILayout.PropertyField(_usageWay, _usageWayLabel);
-		if (_usageWay.intValue == 1)
+		EditorGUILayout.PropertyField(_mode, _modeLabel);
+		if (_mode.intValue == 1)
 		{
 			EditorGUILayout.PropertyField(_randomArea, _randomAreaLabel);
 			_timeBetweenRandomPoints.floatValue = Mathf.Max(0, _timeBetweenRandomPoints.floatValue);

@@ -22,7 +22,7 @@ public class MoveToAPointActuator : MovementActuator
     }
 
     // Movement types
-    public enum UsageWay
+    public enum Mode
     {
         Waypoint = 0,        // Follow defined waypoints
         RandomArea = 1       // Move within a random area
@@ -42,7 +42,7 @@ public class MoveToAPointActuator : MovementActuator
     #endregion
 
     [SerializeField]
-    private UsageWay _usageWay;
+    private Mode _mode;
 
     [SerializeField]
     private List<WaypointData> _waypointsData = new List<WaypointData>();
@@ -85,7 +85,7 @@ public class MoveToAPointActuator : MovementActuator
         _currentWaypointIndex = 0;
 
         // Check if waypoints are properly set
-        if (_usageWay == UsageWay.Waypoint && (_waypointsData == null || _waypointsData.Count == 0))
+        if (_mode == Mode.Waypoint && (_waypointsData == null || _waypointsData.Count == 0))
         {
             Debug.LogError($"MoveToAPoint_Actuator error in {name}: No waypoints were set.");
 #if UNITY_EDITOR
@@ -95,7 +95,7 @@ public class MoveToAPointActuator : MovementActuator
         }
         else
         {
-            if (_usageWay == UsageWay.Waypoint)
+            if (_mode == Mode.Waypoint)
             {
                 // Cache positions of waypoints to improve performance
                 foreach (var waypoint in _waypointsData)
@@ -111,7 +111,7 @@ public class MoveToAPointActuator : MovementActuator
         }
 
         // Check for random area setup
-        if (_usageWay == UsageWay.RandomArea)
+        if (_mode == Mode.RandomArea)
         {
             if (_randomArea == null)
             {
@@ -136,12 +136,12 @@ public class MoveToAPointActuator : MovementActuator
         if (!_moving) return;
 
         // Handle movement type
-        switch (_usageWay)
+        switch (_mode)
         {
-            case UsageWay.Waypoint:
+            case Mode.Waypoint:
                 MoveAlongWaypoints();
                 break;
-            case UsageWay.RandomArea:
+            case Mode.RandomArea:
                 MoveToRandomPoint();
                 break;
         }
@@ -247,7 +247,7 @@ public class MoveToAPointActuator : MovementActuator
         _startInterpolationPosition = reachedPos;
         _currentWaypointIndex++;
 
-        if (_usageWay == UsageWay.RandomArea)
+        if (_mode == Mode.RandomArea)
         {
             _randomPointReached = true;
         }
@@ -277,13 +277,13 @@ public class MoveToAPointActuator : MovementActuator
         if (!_debugActuator) return;
         Gizmos.color = new Color(1f, 0.5f, 0f);
 
-        switch (_usageWay)
+        switch (_mode)
         {
-            case UsageWay.RandomArea:
+            case Mode.RandomArea:
                 Gizmos.DrawSphere(_currentRandomPoint, 0.2f);
                 break;
 
-            case UsageWay.Waypoint:
+            case Mode.Waypoint:
                 if (_waypointsData.Count > 0 && _currentWaypointIndex < _waypointsData.Count)
                 {
                     Transform currentWaypoint = _waypointsData[_currentWaypointIndex].waypoint;
