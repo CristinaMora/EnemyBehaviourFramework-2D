@@ -557,6 +557,8 @@ Ahora vamos a ajustar las animaciones:
   19. Hacemos doble click sobre el estado Vertical Movement, en Down arrastramos la animación que queremos hacer hasta Motion, en este caso vamos a usar Fall FatBird que se encuentra en Assets/Animations/Sprites.
   20. Añadimos el controlador que hemos duplicado al Animator del enemigo FatBird.
 
+
+Para los usuarios que vayan a realizar las pruebas pertinentes, a continuación les proporcionamos el [enlace](https://docs.google.com/forms/d/e/1FAIpQLSf8PoIgNjA8txm0fkzrJ5Hyyg_QtLrCoOKa4X4AMLo8HZobgA/viewform?usp=header) al cuestionario
 ## Solución de Problemas
 
 | Problema                  | Solución                          |
