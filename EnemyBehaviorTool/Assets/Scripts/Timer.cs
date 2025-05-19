@@ -49,6 +49,12 @@ public class Timer
         }
     }
 
+    // Updates the detection time
+    public void SetDetectionTime(float newValue)
+    {
+        _detectionTime = newValue;
+    }
+
     // Gets the remaining time
     public float GetTimeRemaining()
     {

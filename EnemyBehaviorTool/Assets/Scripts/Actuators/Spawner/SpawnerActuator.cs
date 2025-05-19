@@ -92,9 +92,6 @@ public class SpawnerActuator : Actuator
             // Trigger spawn animation/event if available
             _animatorManager.SpawnEvent();
         }
-
-
-
     }
     #region Setters and getters
 

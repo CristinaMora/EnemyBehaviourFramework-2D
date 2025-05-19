@@ -20,12 +20,13 @@ public class SpawnerComponentEditor : Editor
         infiniteEnemiesProp = serializedObject.FindProperty("_infiniteEnemies");
         numOfEnemiesToSpawnProp = serializedObject.FindProperty("_numofTimesToSpawn");
         spawnIntervalProp = serializedObject.FindProperty("_spawnInterval");
-        spawnListProp = serializedObject.FindProperty("_spawnList");
+        spawnListProp = serializedObject.FindProperty("_spawnPoints");
     }
 
     public override void OnInspectorGUI()
     {
-        EditorGUILayout.HelpBox("If you are using an AnimatorManager, you must specify when objects should spawn using Animation Events. CallSpawn().", MessageType.Warning);
+		serializedObject.Update();
+		EditorGUILayout.HelpBox("If you are using an AnimatorManager, you must specify when objects should spawn using Animation Events. CallSpawn().", MessageType.Warning);
 
         EditorGUILayout.PropertyField(infiniteEnemiesProp, infiniteEnemiesLabel);
         if (!infiniteEnemiesProp.boolValue)
