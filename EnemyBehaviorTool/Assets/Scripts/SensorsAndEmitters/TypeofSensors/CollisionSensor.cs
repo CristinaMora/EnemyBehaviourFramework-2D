@@ -25,8 +25,9 @@ public class CollisionSensor : Sensor
         }
     }
 
-    // Handles the collision event when the object stays in collision
-    private void OnCollisionStay2D(Collision2D collision)
+	// Handles the collision event when the object stays in collision
+	// This will be useful when an object collides while the sensor is off and when it turns on we still want to detect the colision
+	private void OnCollisionStay2D(Collision2D collision)
     {
         // Only process the collision if the sensor is active and the timer has finished
         if (!_sensorActive || !_timerFinished) return;

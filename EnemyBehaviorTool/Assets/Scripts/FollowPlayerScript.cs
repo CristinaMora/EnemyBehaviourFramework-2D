@@ -20,7 +20,6 @@ public class FollowPlayerScript : MonoBehaviour
         // Check if the target is assigned
         if (target == null)
         {
-            Debug.LogWarning("No target assigned to the camera");
             return;
         }
 

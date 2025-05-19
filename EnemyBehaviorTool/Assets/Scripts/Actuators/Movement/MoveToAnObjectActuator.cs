@@ -5,9 +5,9 @@ public class MoveToAnObjectActuator : MovementActuator
 {
     const float ALMOST_REACHED_ONE = 0.995f; // Threshold to consider the interpolation as complete
 
+	const float MIN_DIRECTION_CHANGE = 0.01f;
 
-
-    [SerializeField]
+	[SerializeField]
     private Transform _objectPosition;
 
     [SerializeField]
@@ -22,8 +22,10 @@ public class MoveToAnObjectActuator : MovementActuator
 
     private Vector2 _startInterpolationPosition;
 
-    // Called when the actuator starts
-    public override void StartActuator()
+	private Vector2 _previousPosition;
+	private AnimatorManager _animatorManager;
+	// Called when the actuator starts
+	public override void StartActuator()
     {
         _rb = GetComponent<Rigidbody2D>();
         _travelElapsedTime = 0f;
@@ -38,12 +40,13 @@ public class MoveToAnObjectActuator : MovementActuator
         }
         else
         {
-            // Store current position as the starting point for interpolation
-            _startInterpolationPosition = _rb.position;
-        }
+			// Store current position as the starting point for interpolation
+			_startInterpolationPosition = _rb.position;
+			_previousPosition = _rb.position;
+		}
 
         // If an AnimatorManager exists, tell it to follow
-        AnimatorManager _animatorManager = this.gameObject.GetComponent<AnimatorManager>();
+        _animatorManager = GetComponent<AnimatorManager>();
         if (_animatorManager != null) _animatorManager.Follow();
     }
 
@@ -80,8 +83,22 @@ public class MoveToAnObjectActuator : MovementActuator
         Vector2 newPosition = Vector2.Lerp(_startInterpolationPosition, targetPos, _t);
         _rb.MovePosition(newPosition);
 
-        // If movement completed stop movement
-        if (_t >= 1f || _objectPosition == null)
+
+		float deltaX = newPosition.x - _previousPosition.x;
+
+		if (Mathf.Abs(deltaX) > MIN_DIRECTION_CHANGE)
+		{
+			if (deltaX < 0)
+				_animatorManager.XLeftChangeAndFlip();
+			else if (deltaX > 0)
+				_animatorManager.XRightChangeAndFlip();
+		}
+
+
+		_previousPosition = newPosition;
+
+		// If movement completed stop movement
+		if (_t >= 1f || _objectPosition == null)
         {
             _moving = false;
         }

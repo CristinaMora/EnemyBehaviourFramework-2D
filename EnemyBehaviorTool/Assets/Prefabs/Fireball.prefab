@@ -147,7 +147,7 @@ Rigidbody2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -196,7 +196,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damageType: 0
-  _instaKill: 0
+  _instaKill: 1
   _amountOfDamage: 1
   _damageCooldown: 1
   _numOfDamageApplication: 2
@@ -219,8 +219,8 @@ MonoBehaviour:
   _easingFunction: 0
   _layersToCollide:
     serializedVersion: 2
-    m_Bits: 255
-  _speed: 30
+    m_Bits: 136
+  _speed: 43
   _throw: 1
   _goalSpeed: 0
   _interpolationTime: 0

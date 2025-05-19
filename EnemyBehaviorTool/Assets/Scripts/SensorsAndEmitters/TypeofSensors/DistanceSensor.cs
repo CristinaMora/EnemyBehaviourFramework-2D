@@ -57,7 +57,7 @@ public class DistanceSensor : Sensor
         base.StartSensor();
         if (_target == null)
         {
-            Debug.LogError($"No target set in Distance Sensor in object {name}");
+            Debug.LogWarning($"No target set in Distance Sensor in object {name}");
         }
     }
 

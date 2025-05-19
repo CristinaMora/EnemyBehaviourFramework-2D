@@ -262,4 +262,4 @@ MonoBehaviour:
   _angle: 0
   _throw: 0
   _onCollisionReaction: 2
-  _aimPlayer: 0
+  _aimPlayer: 1

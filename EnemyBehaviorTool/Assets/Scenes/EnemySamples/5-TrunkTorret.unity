@@ -535,7 +535,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1009835250}
-  m_BodyType: 0
+  m_BodyType: 2
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -553,7 +553,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 5
 --- !u!212 &1009835258
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -634,7 +634,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac3db287016e5a146906aea374dd5ee2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spawnInterval: 5
+  _spawnInterval: 2
   _infiniteEnemies: 1
   _numofTimesToSpawn: 0
   _spawnPoints:

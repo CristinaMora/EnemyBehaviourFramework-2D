@@ -73,9 +73,7 @@ public class CircularComponentEditor : ActuatorEditor
 			}
 			else
 			{
-				_angularSpeed.floatValue = Mathf.Max(0, _angularSpeed.floatValue);
 				EditorGUILayout.PropertyField(_angularSpeed, _angularSpeedLabel);
-
 				_currentAngularSpeed.floatValue = _angularSpeed.floatValue * Mathf.Deg2Rad;
 			}
 			EditorGUI.indentLevel--;

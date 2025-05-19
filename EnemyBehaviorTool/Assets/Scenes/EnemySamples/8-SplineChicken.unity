@@ -1112,7 +1112,7 @@ GameObject:
   - component: {fileID: 1502005163}
   - component: {fileID: 1502005162}
   m_Layer: 0
-  m_Name: Squere Spline
+  m_Name: SquareSpline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

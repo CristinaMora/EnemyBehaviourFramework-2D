@@ -69,7 +69,11 @@ public class VerticalComponentEditor : ActuatorEditor
 		{
 			EditorGUILayout.PropertyField(_followPlayerProperty, _followPlayerLabel);
 			if (!_followPlayerProperty.boolValue)
+			{
+				EditorGUI.indentLevel++;
 				EditorGUILayout.PropertyField(_directionProperty, _directionLabel);
+				EditorGUI.indentLevel--;
+			}
 			if (_followPlayerProperty.boolValue && _onCollisionReaction.intValue == 1) // 1 = Bounce
 			{
 				EditorGUILayout.HelpBox("The object won't bounce off collisions while following the player.", MessageType.Warning);

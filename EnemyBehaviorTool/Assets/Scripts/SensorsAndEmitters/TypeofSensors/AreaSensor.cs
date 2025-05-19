@@ -43,6 +43,7 @@ public class AreaSensor : Sensor
     }
 
     // Called when another object remains inside the detection zone
+    // This will be useful when an object enters in the detection zone while the sensor is off and when it turns on we still want to detect the colision
     private void OnTriggerStay2D(Collider2D collision)
     {
         // Only process the event if the sensor is active and the timer has finished

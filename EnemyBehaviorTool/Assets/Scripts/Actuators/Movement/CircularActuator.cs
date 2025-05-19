@@ -22,10 +22,6 @@ public class CircularActuator : MovementActuator
 	[SerializeField, Range(0f, 360f)]
 	private float _maxAngle = 360f;
 
-	// Angular acceleration in case the movement is accelerated.
-    [SerializeField, HideInInspector]
-    private float _angularAcceleration = 0f;
-
 	// If true the object will rotate with it's movement.
     [SerializeField]
     private bool _canRotate = false;

@@ -45,7 +45,38 @@ public class DamageSensor : Sensor
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+	// Handles the collision event when the object stays in collision
+	// This will be useful when an object enters in the detection zone while the sensor is off and when it turns on we still want to detect the colision
+	private void OnTriggerStay2D(Collider2D collision)
+	{
+		if (_sensorActive && _timerFinished && !_col)
+		{
+			// Check if the colliding object has a DamageEmitter component
+			_damageEmitter = collision.gameObject.GetComponent<DamageEmitter>();
+
+			if (_damageEmitter != null && _damageEmitter.enabled && _damageEmitter.GetEmitting())
+			{
+				// Handle destruction if the DamageEmitter is configured to destroy after inflicting damage
+				if (_damageEmitter.GetDestroyAfterDoingDamage())
+				{
+					AnimatorManager _animatorManager = collision.gameObject.GetComponent<AnimatorManager>();
+					if (_animatorManager != null)
+					{
+						_animatorManager.Destroy(); // Trigger destruction animation
+					}
+					else
+					{
+						Destroy(collision.gameObject); // Destroy the object directly
+					}
+				}
+
+				_col = true; // Mark that a collision has occurred
+				EventDetected(); // Notify listeners of the event
+			}
+		}
+	}
+
+	private void OnTriggerExit2D(Collider2D collision)
     {
         if (_sensorActive && _timerFinished)
         {
@@ -91,7 +122,38 @@ public class DamageSensor : Sensor
         }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+
+	// Handles the collision event when the object stays in collision
+	// This will be useful when an object collides while the sensor is off and when it turns on we still want to detect the colision
+	private void OnCollisionStay2D(Collision2D collision)
+	{
+		if (_sensorActive && _timerFinished && !_col)
+		{
+			// Check if the colliding object has a DamageEmitter component
+			_damageEmitter = collision.gameObject.GetComponent<DamageEmitter>();
+
+			if (_damageEmitter != null && _damageEmitter.enabled && _damageEmitter.GetEmitting())
+			{
+				// Handle destruction if the DamageEmitter is configured to destroy after inflicting damage
+				if (_damageEmitter.GetDestroyAfterDoingDamage())
+				{
+					AnimatorManager animatorController = collision.gameObject.GetComponent<AnimatorManager>();
+					if (animatorController != null)
+					{
+						animatorController.Destroy(); // Trigger destruction animation
+					}
+					else
+					{
+						Destroy(collision.gameObject); // Destroy the object directly
+					}
+				}
+
+				_col = true; // Mark that a collision has occurred
+				EventDetected(); // Notify listeners of the event
+			}
+		}
+	}
+	private void OnCollisionExit2D(Collision2D collision)
     {
         if (_sensorActive && _timerFinished)
         {

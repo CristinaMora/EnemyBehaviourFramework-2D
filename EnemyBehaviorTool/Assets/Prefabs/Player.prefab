@@ -15,10 +15,10 @@ GameObject:
   - component: {fileID: 6874414665979048026}
   - component: {fileID: 3574856948696456323}
   - component: {fileID: 4355269886765730135}
-  - component: {fileID: 3087672283539588008}
   - component: {fileID: 6255542725094808638}
   - component: {fileID: 8096661030971321583}
   - component: {fileID: -3483883486544030055}
+  - component: {fileID: 5773196668986215373}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -209,20 +209,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bulletPrefab: {fileID: 6312299861578909251, guid: 358472d75c45a4441b8ed880f66dee05, type: 3}
   _shootingCooldown: 0.5
---- !u!114 &3087672283539588008
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3558197406337536867}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a8920e494e620248841fb19fd858f3b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fallMultiplier: 2.5
-  lowJumpMultiplier: 2
 --- !u!114 &6255542725094808638
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -273,13 +259,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 272dcdf8a9ae8034fa510e3386fe48fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _debugBoxes: 1
+  _debugBoxes: 0
   _detectionLayers:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 264
   bottomSize: {x: 0.64, y: 0.1}
   rightSize: {x: 0.06, y: 1}
   leftSize: {x: 0.06, y: 1}
   bottomOffset: {x: 0, y: -0.64}
   rightOffset: {x: 0.44, y: 0}
   leftOffset: {x: -0.48, y: 0}
+--- !u!114 &5773196668986215373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3558197406337536867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39082a4fcf4ff464b98561d1034a969a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fallMultiplier: 2.5
+  lowJumpMultiplier: 2
