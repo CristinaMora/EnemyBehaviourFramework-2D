@@ -30,6 +30,8 @@ public class CircularComponentEditor : ActuatorEditor
 	private SerializedProperty _maxAngle;
 	private SerializedProperty _currentAngularSpeed;
 	private SerializedProperty _canRotate;
+
+	private bool _showMovementInfo = true;
 	private void OnEnable()
 	{
 		_pointPlayer = serializedObject.FindProperty("_pointPlayer");
@@ -50,37 +52,41 @@ public class CircularComponentEditor : ActuatorEditor
 		EditorGUILayout.PropertyField(_rotationPointPosition, _rotationPointPositionLabel);
 		EditorGUILayout.PropertyField(_pointPlayer, _pointPlayerLabel);
 		EditorGUILayout.PropertyField(_canRotate, _canRotateLabel);
+		EditorGUI.indentLevel++;
+		_showMovementInfo = EditorGUILayout.Foldout(_showMovementInfo, "Movement Info", true);
+		
 		if (!_pointPlayer.boolValue)
 		{
-			EditorGUI.indentLevel++;
-			EditorGUILayout.PropertyField(_isAccelerated, _isAcceleratedLabel);
-
-			EditorGUILayout.PropertyField(_maxAngle, _maxAngleLabel);
-			if (_isAccelerated.boolValue)
+			if (_showMovementInfo)
 			{
-				_goalAngularSpeed.floatValue = Mathf.Max(0, _goalAngularSpeed.floatValue);
-				EditorGUILayout.PropertyField(_goalAngularSpeed, _goalAngularSpeedLabel);
-
-
-				_interpolationTime.floatValue = Mathf.Max(0, _interpolationTime.floatValue);
-				EditorGUILayout.PropertyField(_interpolationTime, _interpolationTimeLabel);
-
-				EditorGUILayout.PropertyField(_easingFunction, _easingFunctionLabel);
 				EditorGUI.indentLevel++;
-				EasingFunction.Ease easingEnum = (EasingFunction.Ease)_easingFunction.intValue;
-				DrawEasingCurve(easingEnum, new Vector2(45, 15), new Vector2(65, 2), "X: Time", "Y: Angular Velocity ", new Vector2(80, 20), new Vector2(60, 20));
+				EditorGUILayout.PropertyField(_isAccelerated, _isAcceleratedLabel);
+
+				EditorGUILayout.PropertyField(_maxAngle, _maxAngleLabel);
+				if (_isAccelerated.boolValue)
+				{
+					_goalAngularSpeed.floatValue = Mathf.Max(0, _goalAngularSpeed.floatValue);
+					EditorGUILayout.PropertyField(_goalAngularSpeed, _goalAngularSpeedLabel);
+
+
+					_interpolationTime.floatValue = Mathf.Max(0, _interpolationTime.floatValue);
+					EditorGUILayout.PropertyField(_interpolationTime, _interpolationTimeLabel);
+
+					EditorGUILayout.PropertyField(_easingFunction, _easingFunctionLabel);
+					EditorGUI.indentLevel++;
+					EasingFunction.Ease easingEnum = (EasingFunction.Ease)_easingFunction.intValue;
+					DrawEasingCurve(easingEnum, new Vector2(45, 15), new Vector2(65, 2), "X: Time", "Y: Angular Velocity ", new Vector2(80, 20), new Vector2(60, 20));
+					EditorGUI.indentLevel--;
+				}
+				else
+				{
+					EditorGUILayout.PropertyField(_angularSpeed, _angularSpeedLabel);
+					_currentAngularSpeed.floatValue = _angularSpeed.floatValue * Mathf.Deg2Rad;
+				}
 				EditorGUI.indentLevel--;
-			}
-			else
-			{
-				EditorGUILayout.PropertyField(_angularSpeed, _angularSpeedLabel);
-				_currentAngularSpeed.floatValue = _angularSpeed.floatValue * Mathf.Deg2Rad;
-			}
-			EditorGUI.indentLevel--;
+			}	
 		}
-		
-		
-		
+		EditorGUI.indentLevel--;
 		serializedObject.ApplyModifiedProperties();
 	}
 }

@@ -7,7 +7,7 @@ public class SplineFollowetEditor : ActuatorEditor
    
     private bool _showMovementInfo = true;
     private static readonly GUIContent _splineContainerLabel = new GUIContent("Spline Container", "The reference to the spline that will follow");
-    private static readonly GUIContent _teleportToClosestPointLabel = new GUIContent("Teleport to Closest Point", "MoveEnemyToSpline: The enemy will move to the spline.\n" +
+    private static readonly GUIContent _teleportToClosestPointLabel = new GUIContent("Teleport To Closest Point", "MoveEnemyToSpline: The enemy will move to the spline.\n" +
 		"MoveSplineToEnemy: The spline will move to the Enemy");
     #region Accelerated movement
     private static readonly GUIContent _goalSpeedLabel = new GUIContent("Goal Speed", "Speed the object will reach");
@@ -46,7 +46,8 @@ public class SplineFollowetEditor : ActuatorEditor
         serializedObject.Update();
         EditorGUILayout.PropertyField(_splineContainerTime, _splineContainerLabel);
         EditorGUILayout.PropertyField(_teleportToClosestPointTime, _teleportToClosestPointLabel);
-        _showMovementInfo = EditorGUILayout.Foldout(_showMovementInfo, "Movement Info", true);
+		EditorGUI.indentLevel++;
+		_showMovementInfo = EditorGUILayout.Foldout(_showMovementInfo, "Movement Info", true);
         EditorGUI.indentLevel++;
         if (_showMovementInfo)
         {
@@ -75,8 +76,8 @@ public class SplineFollowetEditor : ActuatorEditor
 
             EditorGUI.indentLevel--;
         }
-
-        serializedObject.ApplyModifiedProperties();
+		EditorGUI.indentLevel--;
+		serializedObject.ApplyModifiedProperties();
     }
      
 }

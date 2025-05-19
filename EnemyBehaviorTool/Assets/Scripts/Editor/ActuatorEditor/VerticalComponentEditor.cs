@@ -9,7 +9,7 @@ public class VerticalComponentEditor : ActuatorEditor
 		"Bounce: The object will bounce to the opposite direction.\n" +
 		"Destroy: The object will be destroyed after the contact.");
 	private static readonly GUIContent _directionLabel = new GUIContent("Direction", "Direction of the vertical movement");
-    private static readonly GUIContent _followPlayerLabel = new GUIContent("Follow Player", "Direction of the horizontal movement will be the nearest to the player");
+    private static readonly GUIContent _followPlayerLabel = new GUIContent("Follow Player", "Direction of the vertical movement will be the nearest to the player");
 	private static readonly GUIContent _layersToCollideLabel = new GUIContent("Layers To Collide", "Layers that will activate the Reaction After Collision event in case there is a collision.");
 
 	private bool _showMovementInfo = true;

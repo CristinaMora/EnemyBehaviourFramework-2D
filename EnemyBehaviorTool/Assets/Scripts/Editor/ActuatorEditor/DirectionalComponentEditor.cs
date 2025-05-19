@@ -16,7 +16,7 @@ public class DirectionalComponentEditor : ActuatorEditor
 	private static readonly GUIContent _isAcceleratedLabel = new GUIContent("Is Accelerated", "Is the object movement accelerated?");
 	private static readonly GUIContent _throwLabel = new GUIContent("Throw", "The object will be moved only once, when the actuator is activated.");
 	private static readonly GUIContent _aimPlayerLabel = new GUIContent("Aim Player", "The object will move towards player direction.");
-    private static readonly GUIContent _layerMaskLabel = new GUIContent("Collision LayerMask", "Select the layers that the object will interact with");
+    private static readonly GUIContent _layerMaskLabel = new GUIContent("Layers To Collide", "Layers that will activate the Reaction After Collision event in case there is a collision.");
 
     private SerializedProperty _onCollisionReaction;
 	private SerializedProperty _speed;

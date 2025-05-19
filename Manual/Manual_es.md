@@ -97,23 +97,30 @@ Antes de comenzar, asegúrate de cumplir con los siguientes requisitos:
 
 ## Componentes del Framework
 
+
+Todos los componentes del Framework serán encontrados en la carpeta *Scripts*.
+Se tomará esta carpeta como referencia para indicar donde se encuentran los componentes que serán nombrados a continuación.
+
 ### Actuadores
 
+
 Los actuadores son componentes que permiten a los enemigos realizar acciones. Estas acciones son las que definen el movimiento o creación de otros enemigos.
+Encontraremos todos los actuadores en la carpeta llamada *Actuators*.
 Disponemos de 7 tipos de actuadores:
 
 - **Spawner Actuator**:
 
   ![SpawnerActuator](./SpawnerActuator.png)  
-  Permite generar (spawnear) nuevos enemigos.
+  Permite generar (spawnear) nuevos enemigos. Se encuentra en *Actuators/Spawner.*
 
-  - *Infinite Enemies:* si se quiere crear infinitos enemigos, en caso contrario se debe especificar la cantidad de veces que vamos a spawnear la lista.
-  - *Spawn Interval:* cada cuánto tiempo se crean.
-  - *Prefab to Spawn:* objeto que queremos crear.
-  - *Spawn Point:* posición donde queremos que se cree el objeto.
+  - *Infinite Enemies:* Si se quiere crear infinitos enemigos, en caso contrario se debe especificar la cantidad de veces que vamos a spawnear la lista.
+  - *Spawn Interval:* Cada cuánto tiempo se crean.
+  - *Prefab to Spawn:* Objeto que queremos crear.
+  - *Spawn Point:* Posición donde queremos que se cree el objeto.
 
   Al ser una lista, podemos spawnear más de un objeto a la vez.
 
+Los siguientes actuadores se encontrarán en la carpeta *Actuators/Movement.*
 - **Horizontal Actuator**:  
 
   ![HorizontalActuator](./HorizontalActuator.png)  
@@ -124,6 +131,10 @@ Este actuador permite mover un objeto horizontalmente, ya sea a la izquierda o a
     - *None:* No hay ninguna reacción al colisionar.
     - *Bounce:* El objeto cambia de dirección y sigue moviéndose en sentido contrario.
     - *Destroy:* El objeto desaparece al colisionar.
+  - *Layers To Collide*
+  En caso de que *Reaction After Collision* no sea *None* aparecerá este campo que determinará con que capa física puede ocurrir la acción designada.
+  - *Follow Player*
+   En caso de ser marcado, el objeto se moverá horizontalmente en dirección al jugador. Esta opción inhabilita la posibilidad de elegir una dirección.
   - *Direction*  
   Determina hacia dónde se mueve el objeto:
     - *Left:* El objeto se moverá hacia la izquierda.
@@ -146,6 +157,10 @@ Este actuador permite mover un objeto horizontalmente, ya sea a la izquierda o a
     - *None:* No hay ninguna reacción al colisionar.
     - *Bounce:* El objeto cambia de dirección y sigue moviéndose en sentido contrario.
     - *Destroy:* El objeto desaparece al colisionar.
+  - *Layers To Collide*
+  En caso de que *Reaction After Collision* no sea *None* aparecerá este campo que determinará con que capa física puede ocurrir la acción designada.
+   - *Follow Player*
+    En caso de ser marcado, el objeto se moverá verticalmente en dirección al jugador. Esta opción inhabilita la posibilidad de elegir una dirección.
   - *Direction*  
   Determina hacia dónde se mueve el objeto:
     - *Up:* El objeto se moverá hacia arriba.
@@ -167,9 +182,8 @@ Este actuador permite mover un objeto horizontalmente, ya sea a la izquierda o a
     - *None:* No hay ninguna reacción al colisionar.
     - *Bounce:* El objeto cambia de dirección y simula un rebote.
     - *Destroy:* El objeto desaparece al colisionar.
-  - *Angle:*  Ángulo con el que va a moverse el objeto.
-  - *Aim Player:* Indica si el objeto va a seguir la dirección del jugador (con esta opción el ángulo no aparece porque se le da valor en función de tu posición y la del objetivo). <br>
-  Para ello tiene que existir un objeto con la [tag](#tag) "Player".
+  - *Layers To Collide*
+  En caso de que *Reaction After Collision* no sea *None* aparecerá este campo que determinará con que capa física puede ocurrir la acción designada.
   - *Is Accelerated*  
     - *False:* Si no es acelerado, el enemigo se moverá con una velocidad lineal constante. Se podrá configurar:  
       - *Throw:* Se aplicará una única vez la fuerza, simulando un lanzamiento.
@@ -179,20 +193,25 @@ Este actuador permite mover un objeto horizontalmente, ya sea a la izquierda o a
       - *Goal Speed:* Es la velocidad máxima que alcanzará el objeto después de acelerar.
       - *Interpolation Time:* Es el tiempo que tarda el objeto en pasar de velocidad actual a su velocidad objetivo.
       - *Easing Function:* Define cómo se comporta la aceleración.
+  - *Aim Player:* Indica si el objeto va a seguir la dirección del jugador (con esta opción el ángulo no aparece porque se le da valor en función de tu posición y la del objetivo). 
+  - *Angle:*  Ángulo con el que va a moverse el objeto.
+   Para ello tiene que existir un objeto con la [tag](#tag) "Player".
+  
 
 - **Circular Actuator**:  
 ![CircularrActuator](./CircularActuator.png)  
  Permite movimientos circulares en torno a un punto de rotación determinado.
-  - *Rotation Point Position*  
+  - *Rotation Point*  
     Define el punto central sobre el cual se realiza la rotación.  
     - *None:* Si no se asigna, el objeto girará en torno a su propio centro.  
     - *[Transform](#transform):* Si se asigna un objeto, la rotación se realizará alrededor de ese punto.  
+  - *Point Player*
+   El objeto rotará teniendo en cuenta la posición del jugador.
+  - *Can Rotate*  
+    Determina si el objeto puede rotar sobre su propio eje además de moverse en círculo.  
 
   - *Max Angle*  
     Ángulo máximo que puede alcanzar el movimiento circular (360 indica un círculo completo, el resto de ángulos se comporta como un péndulo).  
-
-  - *Can Rotate*  
-    Determina si el objeto puede rotar sobre su propio eje además de moverse en círculo.  
     - *False:* El objeto solo se moverá en la trayectoria circular sin girar sobre sí mismo.  
     - *True:* El objeto girará sobre su propio eje mientras se mueve.  
 
@@ -204,79 +223,114 @@ Este actuador permite mover un objeto horizontalmente, ya sea a la izquierda o a
       - *Easing Function:* Define cómo se comporta la aceleración.
 
 - **Move To A Point Actuator**:  
-Hace que el enemigo se mueva hacia un punto fijo específico del escenario. Hay dos configuraciones dependiendo del *Usage Way*.
+Hace que el enemigo se mueva hacia un punto fijo específico del escenario. Hay dos configuraciones dependiendo del *Mode*.
   - *Random Area*: Coge puntos aleatorios dentro de un área.
 ![MoveToAPointActuator](./MoveToAPointActuatorA.png)
-    - *Random Area:* [Collider](#collider) que servirá para la referencia del área.
+    - *Random Area*
+     [Collider](#collider) que servirá para la referencia del área.
     - *Time Between Random Points:* Cada cuánto cambia el punto a otro distinto.
-  - *Waypoint*: Indica que queremos seguir un camino predeterminado de puntos.
-    - *Is A Cycle:* Indica si queremos que al llegar al final de los waypoints, se vuelva a iniciar la lista.
-    - *Same Waypoint Behaviour:* Indica si queremos que el comportamiento sea el mismo para todos los waypoints.
+  - *Waypoint*
+   Indica que queremos seguir un camino predeterminado de puntos.
+    - *Loop*
+     Indica si queremos que al llegar al final de los waypoints, se vuelva a iniciar la lista.
+    - *Same Waypoint Behaviour*
+     Indica si queremos que el comportamiento sea el mismo para todos los waypoints.
       - Si es así, se creará un panel único de especificación de puntos:  
 ![MoveToAPointActuator](./MoveToAPointActuatorS.png)  
-        - *Time Between Waypoints:* Tiempo que se tarda entre un punto y otro.
-        - *Are Accelerated:* Si el movimiento es acelerado o no. En caso de serlo, aparecerá una easing function que indicará con qué aceleración se mueve.
-        - *Should Stop:* Indica si debe o no parar al llegar a un punto. Si se debe parar, hay que  indicar cuánto tiempo.  
+        - *Time Between Waypoints*
+         Tiempo que se tarda entre un punto y otro.
+        - *Are Accelerated*
+         Si el movimiento es acelerado o no. En caso de serlo, aparecerá una easing function que indicará con qué aceleración se mueve.
+        - *Should Stop*
+         Indica si debe o no parar al llegar a un punto. Si se debe parar, hay que  indicar cuánto tiempo.  
       - Si no es así, aparecerán los mismos datos por cada waypoint:  
     ![MoveToAPointActuator](./MoveToAPointActuator.png)  
 
-- **Move to an Object Actuator**:  
+- **Move To An Object Actuator**:  
 ![MoveToAnObjectActuator](./MoveToAnObjectActuator.png)  
   Hace que el enemigo se desplace automáticamente hacia un objeto determinado, si el objeto se mueve, el enemigo cambiará su dirección para ir hacia el objeto.
-  - *Waypoint Transform:* Transform del objeto al que se quiere perseguir.
-  - *Time to Reach:* Tiempo que tarda en llegar al objetivo.
-  - *Is Accelerated:*
-    - *False:* Si no es acelerado, la posición cambiará de manera constante.  
-    - *True:* Si es acelerado, la posición se definirá mediante la función de easing:
+  - *Object Transform*
+   Transform del objeto al que se quiere perseguir.
+  - *Time To Reach*
+   Tiempo que tarda en llegar al objetivo.
+  - *Is Accelerated*
+    - *False*
+     Si no es acelerado, la posición cambiará de manera constante.  
+    - *True*
+     Si es acelerado, la posición se definirá mediante la función de easing:
     ![MoveToAnObjectActuator](./MoveToAnObjectActuatorA.png)  
 - **Spline Follower Actuator**:  
 ![SpllineFollowerActuator](./Spline.png)  
-  Hace que el enemigo se desplace  y rote automáticamente siguiendo una ruta definida por un spline.
-  - *Spline Container:* Transform del objeto al que se quiere perseguir.
-  - *Teleport to Closest Point:* Indica si, en caso de que la posición del enemigo no coincidiese con el Spline, que objeto cambia su posición.
-  - *Speed:* Tiempo que tarda en llegar al objetivo.
+  Hace que el enemigo se desplace y rote automáticamente siguiendo una ruta definida por un spline.
+  - *Spline Container*
+   Transform del objeto al que se quiere perseguir.
+  - *Teleport To Closest Point*
+   Indica si, en caso de que la posición del enemigo no coincidiese con el Spline, que objeto cambia su posición.
+  - *Speed*
+   Tiempo que tarda en llegar al objetivo.
   - *Is Accelerated*
-    - *False:* Si no es acelerado, el objeto se moverá con velocidad constante definida por el parámetro *Speed*.  
-    - *True:* Si es acelerado, la velocidad aumentará progresivamente según los siguientes parámetros:  
-      - *Goal Speed:* Es la velocidad máxima que alcanzará el objeto.  
-      - *Interpolation Time:* Es el tiempo que tarda el objeto en pasar de velocidad actual a su velocidad objetivo.  
-      - *Easing Function:* Define cómo se comporta la aceleración.
+    - *False*
+     Si no es acelerado, el objeto se moverá con velocidad constante definida por el parámetro *Speed*.  
+    - *True*
+     Si es acelerado, la velocidad aumentará progresivamente según los siguientes parámetros:  
+      - *Goal Speed*
+       Es la velocidad máxima que alcanzará el objeto.  
+      - *Interpolation Time*
+       Es el tiempo que tarda el objeto en pasar de velocidad actual a su velocidad objetivo.  
+      - *Easing Function*
+       Define cómo se comporta la aceleración.
 
 ### Sensores
 
 Los sensores permiten detectar información del entorno y activar transiciones.
- Disponemos de cinco sensores:
+ Disponemos de cinco sensores y podemos encontrarlos en *SensorsAndEmitters/TypeOfSensors*:
 
 - **Area Sensor:**  
   ![AreaSensor](./AreaSensor.png)  
   El sensor de área detecta cuando un objeto específico entra dentro de su zona de detección.<br>
-  - *Start Detecting Time:* Tiempo de delay hasta que empiece la detección.
-  - *Target:* Objeto que se quiere detectar.
-  - *Detection Condition:* Indica si quiere detectar al salir o al entrar del área.
+  - *Start Detecting Time*
+   Tiempo de delay hasta que empiece la detección.
+  - *Target*
+   Objeto que se quiere detectar.
+  - *Detection Condition*
+   Indica si quiere detectar al salir o al entrar del área.
 
 - **Collision Sensor:**  
   ![CollisionSensor](./CollisionSensor.png)  
   Detecta cuando el enemigo choca físicamente con otro objeto. A diferencia del *Area Sensor*, este requiere una colisión real en lugar de solo detectar la presencia dentro de un área.<br>
   Se debe especificar qué *[capas físicas](#capa-fisica)* activan el sensor.
-  - *Start Detecting Time:* Tiempo de delay hasta que empiece la detección.
-  - *Layers to Collide:* Máscara de capas físicas donde se debe indicar con que queremos chocar.
+  - *Start Detecting Time*
+   Tiempo de delay hasta que empiece la detección.
+  - *Layers to Collide*
+   Máscara de capas físicas donde se debe indicar con que queremos chocar.
 
 - **Distance Sensor:**  
 ![DistanceSensor](./DistanceSensor.png)  
   Detecta cuando un objeto específico *Target* está a una *determinada distancia del enemigo*.<br>
-  - *Distance type:* Tipo de distancia que se quiere comprobar.
+  - *Distance type*
+   Tipo de distancia que se quiere comprobar.
     - Magnitud: 360 grados de detección.
     - Single Axis: Un único eje.
-  - *Detection Condition:* Indica si quiere dectectar al salir o al entrar del área.
-  - *Target:* Objeto que se quiere detectar.
-  - *Start Detecting Time:* Tiempo de delay hasta que empiece la detección.
-  - *Detection Distance:* Distancia de detección.
+  - *Detection Condition*
+   Indica si quiere dectectar al salir o al entrar del área.
+  - *Target*
+   Objeto que se quiere detectar.
+  - *Start Detecting Time*
+   Tiempo de delay hasta que empiece la detección.
+  - *Detection Distance*
+   Distancia de detección.
   
 - **Time Sensor:**
 ![TimeSensor](./TimeSensor.png)  
  Detecta cuando pasa un tiempo específico.
-  - *Start Detecting Time:* Tiempo de delay hasta que empiece la detección.
-  - *Detection Time:* Tiempo de detección.
+  - *Start Detecting Time*
+   Tiempo de delay hasta que empiece la detección.
+  - *Detection Time*
+   Tiempo de detección.
+
+### Daño
+
+Para poder realizar daño se necesita un sensor y un emisor.
 - **Damage Sensor:**  
 ![DamageSensor](./DamageSensor.png)  
   Detecta cuando una entidad *recibe daño*.
@@ -288,24 +342,34 @@ Los sensores permiten detectar información del entorno y activar transiciones.
   - **Instant:**  
   ![DamageEmitter](./DamageEmitter.png)  
   Daño instantáneo que afecta una única vez al entrar en contacto.  
-    - *Destroy After Doing Damage:* Indica si queremos que el objeto desaparezca tras hacer daño.  
-    - *Instant Kill:*Indica si queremos que elimine directamente a la entidad con la que colisiona.  
-    - *Damage Amount:* En caso de no querer eliminar directamente a la entidad colisionada, se indica el daño que queremos aplicar.
+    - *Destroy After Doing Damage*
+     Indica si queremos que el objeto desaparezca tras hacer daño.  
+    - *Instant Kill*
+     Indica si queremos que elimine directamente a la entidad con la que colisiona.  
+    - *Damage Amount*
+     En caso de no querer eliminar directamente a la entidad colisionada, se indica el daño que queremos aplicar.
 
   - **Permanence:**  
   ![DamageEmitterP](./DamageEmitterP.png)  
   El daño por permanencia afecta mientras estés dentro del objeto.  
-    - *Damage Amount:* Cantidad de vida que se resta cada vez.  
-    - *Damage Cooldown:* Intervalo de tiempo entre cada aplicación de daño.
+    - *Damage Amount*
+     Cantidad de vida que se resta cada vez.  
+    - *Damage Cooldown*
+     Intervalo de tiempo entre cada aplicación de daño.
 
   - **Residual:**  
   ![DamageEmitterR](./DamageEmitterR.png)  
   El daño residual sigue afectando incluso cuando ya no estás en contacto.  
-    - *Destroy After Doing Damage:* Permite indicar si el objeto debe eliminarse después del primer golpe.  
-    - *Instant Damage Amount:* Daño inicial que se aplica al primer contacto.  
-    - *Residual Damage Amount:* Daño aplicado en cada repetición residual.  
-    - *Damage Cooldown:* Intervalo de tiempo entre cada aplicación de daño residual.  
-    - *Number Of Applications:* Número total de veces que se aplica el daño residual.
+    - *Destroy After Doing Damage*
+     Permite indicar si el objeto debe eliminarse después del primer golpe.  
+    - *Instant Damage Amount*
+     Daño inicial que se aplica al primer contacto.  
+    - *Residual Damage Amount*
+     Daño aplicado en cada repetición residual.  
+    - *Damage Cooldown*
+     Intervalo de tiempo entre cada aplicación de daño residual.  
+    - *Number Of Applications*
+     Número total de veces que se aplica el daño residual.
 
 ### Estado
 
@@ -313,17 +377,22 @@ Un estado es un comportamiento concreto que puede tener un enemigo en un cierto 
   ![State](./State.png)  
   Hace que el enemigo se desplace  y rote automáticamente siguiendo una ruta definida por un spline.
 
-- *Actuator List:* Acción/acciones vamos a realizar.
-- *Transiton List:*  Para poder tener *Transiciones* de un estado a otro, se debe especificar el sensor que estará encargado de detectar ese cambio y el estado al que se desea pasar.
-- *Damage Emitters In State:* En caso de que queramos que en el estado se realice daño, se deberá especificar qué *DamageEmitter* se encontrará activo.  
-- *Debug State:* Si deseamos *depurar* información sobre el movimiento que se va a realizar.
+- *Actuator List*
+ Acción/acciones vamos a realizar.
+- *Transition List*
+  Para poder tener *Transiciones* de un estado a otro, se debe especificar el sensor que estará encargado de detectar ese cambio y el estado al que se desea pasar.
+- *Damage Emitters List*
+ En caso de que queramos que en el estado se realice daño, se deberá especificar qué *DamageEmitter* se encontrará activo.  
+- *Debug State*
+ Si deseamos *depurar* información sobre el movimiento que se va a realizar.
 
 ### Máquina de Estados Finita (FSM)
 
   ![FSM](./FSM.png)  
   La FSM organiza el comportamiento de un enemigo en **estados** (Idle, Patrol, Attack, etc.). Esta es la encargada de llamar y gestionar todos los estados de un enemigo.  
 
-- *Initial State:* Estado inicial del enemigo.
+- *Initial State*
+ Estado inicial del enemigo.
 
 **Ejemplo:** Un "Guardia" puede tener estados como Patrol, Chase y Attack. Si el jugador entra en su campo de visión, transiciona de Patrol a Chase. Si lo alcanza, a Attack. Si lo pierde de vista, vuelve a Patrol.
 
@@ -333,16 +402,23 @@ Un estado es un comportamiento concreto que puede tener un enemigo en un cierto 
 Se encarga de gestionar las animaciones de los enemigos en función de sus estados y acciones.
 Es importante que todos los [sprites](#sprite) que se quieran utilizar *se orienten hacia la derecha*.
 
-- *Can [Flip](#flip) X:* Indica si el sprite se puede rotar en el eje X.
-- *Can Flip Y:* Indica si el sprite se puede rotar en el eje Y.
+- *Can [Flip](#flip) X*
+ Indica si el sprite se puede rotar en el eje X.
+- *Can Flip Y*
+ Indica si el sprite se puede rotar en el eje Y.
 
 ### Life
 
 Gestiona la vida de los objetos.  
  ![Life](./Life.png)  
 
-- *Initial Life:* Vida inicial.
-- *Entity type:* Tipo de entidad (Player o Enemy).
+- *Entity Type*
+ Tipo de entidad (Player o Enemy).
+- *Initial Life*
+ Vida inicial.
+ - *Max Life*
+ Vida máxima.
+
 
 ## Ejemplos de Uso
 
@@ -356,7 +432,7 @@ La escena cuenta con un jugador y un mundo listos para funcionar.
 El águila y efectos de items son de:
 <https://assetstore.unity.com/packages/2d/characters/sunny-land-103349>
 
-### Primer Ejemplo: Pinchos
+### Primer Ejemplo: Spikes
 
 Uno de los enemigos más comunes son los pinchos, que no se mueven pero sí que dañan al jugador. Vamos a crearlos.
 Para el ejemplo usaremos la imagen de los pinchos:  
@@ -364,17 +440,17 @@ Para el ejemplo usaremos la imagen de los pinchos:
 ![Pinchos](./Pinchos.png)
 
  1. Crea un objeto llamado pinchos partiendo del prefab BaseEnemy que se encuentra en Assets/Prefabs.
- 2. Cambia el *[Sprite Renderer](#sprite-renderer)* a la imagen de pinchos (si no coincidiese ya) que se encuenta en Assets/Animations/Sprites/Spikes y ajusta el Collider a la imagen.
- 3. Congela la posición en X y en Y que se encuentra en Constraints del Rigidbody 2D, para que los pinchos se mantengan fijos.
- 4. Elimina el AnimatorManager y Animator, en este caso no son necesarios porque el objeto no tiene animación.
- 5. Configuramos el Damage Emitter:  
+ 2. Cambia el Sprite del *[Sprite Renderer](#sprite-renderer)* a la imagen de pinchos (si no coincidiese ya) que se encuenta en Assets/Animations/Sprites/Spikes y ajusta el Collider a la imagen.
+ 3. Congela la posición del enemigo en X y en Y seleccionando la opción del componente Rigidbody2D → Constraints → Freeze Position → X/Y, para que los pinchos se mantengan fijos.
+ 4. Congela la rotación del Rigidbody2D en la opción Rigidbody2D → Constraints → Freeze Rotation → Z. 
+ 5. Elimina el AnimatorManager y Animator, en este caso no son necesarios porque el objeto no tiene animación.
+ 6. Configuramos el Damage Emitter:  
      - Active From Start: True
      - Damage Type: Permanence
-     - Destroy After Doing Damage: False
      - Damage Amount: 1
      - Damage Cooldown: 2
 
-### Segundo Ejemplo: Deambulador
+### Segundo Ejemplo: Bouncing Bunny
 
 Otro enemigo muy común son deambuladores, también conocidos como: Goomba, Reptacillo, o con otro nombre en muchos juegos.
 Para el ejemplo usaremos la imagen del conejo:  
@@ -382,15 +458,15 @@ Para el ejemplo usaremos la imagen del conejo:
 ![Bunny](./Bunny.png)
 
  1. Crea un objeto llamado deambulador partiendo del prefab BaseEnemy que se encuentra en Assets/Prefabs.
- 2. Cambia el *Sprite Renderer* a cualquier imagen de Bunny que se encuentra en Assets/Animations/Sprites/Bunny y ajusta el Collider a la imagen.
- 3. Congela la rotación en Constraints del Rigidbody 2D.
+ 2. Cambia el Sprite del *Sprite Renderer* a cualquier imagen de Bunny que se encuentra en Assets/Animations/Sprites/Bunny y ajusta el Collider a la imagen.
+ 3. Congela la rotación del Rigidbody2D en la opción Rigidbody2D → Constraints → Freeze Rotation → Z.
  4. Configuramos el Damage Emitter:  
      - Active From Start: True
      - Damage Type: Instant
      - Destroy After Doing Damage: False
      - Instant Kill: False
      - Damage Amount: 1
- 5. Añadimos un componente de movimiento Horizontal Actuator y lo añadimos a Actuator List del State.
+ 5. Añadimos un componente de movimiento Horizontal Actuator al objeto y lo arrastramos hasta el Actuator List del State.
  6. Configuramos el Horizontal Actuator:
     - Reaction After Collision: Bounce
     - Layers to Collide: World, Player
@@ -409,24 +485,28 @@ Para el ejemplo usaremos la imagen del conejo:
  11. Hacemos click sobre el estado Damage y arrastramos la animación que queremos hacer hasta Motion, en este caso vamos a usar Hit que se encuentra en Assets/Animations/Sprites/Bunny.
  12. Hacemos click sobre el estado Die y arrastramos la animación que queremos hacer hasta Motion, en este caso vamos a usar Hit que se encuentra en Assets/Animations/Sprites/Bunny.
  13. Añadimos el controlador que hemos duplicado al Animator del enemigo deambulador.
+ 14. Por último añadimos el componente *Life* lo que también nos añadirá un *DamageSensor*.
+ 15. Los parámetros del componente *Life* quedarían de la siguiente manera:
+     - Initial Life: 1
+     - Max Life: 1
+ 16. En *DamageSensor* vamos a marcar la casilla de Active From Start.
 
-### Tercer Ejemplo: Torreta + balas
-
+### Tercer Ejemplo: Trunk Torret
 Vamos a continuar creando un enemigo que dispare balas, para ello vamos a crear primero las balas y luego el enemigo.  
 Para el ejemplo usaremos la imagen de la bala:  
 
 ![Bullet](./Bullet.png)
 
  1. Crea un prefab llamado Bullet partiendo del prefab BaseEnemy que se encuentra en Assets/Prefabs.
- 2. Cambia el *Sprite Renderer* al de la bala que se encuentra en Assets/Animations/Sprites/Trunk y ajusta el Collider a la imagen.
- 3. Congela la rotación en Constraints del RigidBody 2D.
+ 2. Cambia el Sprite del *Sprite Renderer* al de la bala que se encuentra en Assets/Animations/Sprites/Trunk y ajusta el Collider a la imagen.
+ 3. Congela la rotación del Rigidbody2D en la opción Rigidbody2D → Constraints → Freeze Rotation → Z.
  4. Configuramos el Damage Emitter:  
      - Active From Start: True
      - Damage Type: Instant
      - Destroy After Doing Damage: True
      - Instant Kill: False
      - Damage Amount: 1
- 5. Añadimos un componente de movimiento Horizontal Movement y lo añadimos a Actuator List del State.
+ 5. Añadimos un componente de movimiento Horizontal Actuator al objeto y lo arrastramos hasta el Actuator List del State.
  6. Configuramos el Movimiento Horizontal:
     - Reaction Afer Collision: Destroy
     - Layers to Collide: World, Player
@@ -436,6 +516,11 @@ Para el ejemplo usaremos la imagen de la bala:
     - Throw: False
     - Speed: 10  
  7. Elimina el AnimatorManager y Animator, en este caso no son necesarios porque el objeto no tiene animación.
+ 8. Por último añadimos el componente *Life* lo que también nos añadirá un *DamageSensor*.
+ 9. Los parámetros del componente *Life* quedarían de la siguiente manera:
+     - Initial Life: 1
+     - Max Life: 1
+ 10. En *DamageSensor* vamos a marcar la casilla de Active From Start.
 
 Ahora vamos a crear la Torreta:  
 Para el ejemplo usaremos la imagen del tronco:
@@ -443,16 +528,16 @@ Para el ejemplo usaremos la imagen del tronco:
 ![Planta](./Planta.png)
 
  1. Crea un objeto llamado Torreta partiendo del prefab BaseEnemy que se encuentra en Assets/Prefabs.
- 2. Cambia el *Sprite Renderer* al del tronco que se encuentra en Assets/Animations/Sprites/Trunk y ajusta el Collider a la imagen.
- 3. Congela la rotación y posicion en X e Y en Constraints del Rigidbody 2D.
+ 2. Cambia el Sprite del *Sprite Renderer* al del tronco que se encuentra en Assets/Animations/Sprites/Trunk y ajusta el Collider a la imagen.
+ 3. Congela la rotación del Rigidbody2D en la opción Rigidbody2D → Constraints → Freeze Rotation → Z. Congela también la posición del enemigo en X y en Y seleccionando la opción del componente Rigidbody2D → Constraints → Freeze Position → X/Y, para que los pinchos se mantengan fijos.
  4. Elimina el componente Damage Emitter y borralo de la lista Damage Emitter List del State.
- 5. Añadimos un *Spawner Actuator* y lo añadimos a Actuator List del State.
+ 5. Añadimos un *Spawner Actuator* y lo añadimos a Actuator List del State. Para ello lo arrastramos hasta el campo de State con el mismo nombre.
  6. Configuramos el *Spawner Actuator*:
     - Infinite Enemies: True
     - Spawn Interval: 1
-    - Spawn List: Un elemento
+    - Spawn Points: Un elemento
       - Prefab To Spawn: Añadir el prefab de la bala que se ha creado antes.
-      - Spawn Point: Crear un objeto vacío y añadir la referencia.
+      - Spawn Point: Creamos un objeto vacío en la escena (Click derecho en la jerarquía de objetos → Create Empty) y añadimos la referencia.
  7. Ajustamos el objeto vacío a la boca del tronco, de ahí saldran las balas.
  8. Es importante recordar que hemos configurado las balas para que se muevan hacia la izquierda, esto hace que el tronco tenga que estar a la derecha de la escena.
 
@@ -469,9 +554,9 @@ Ahora vamos a ajustar las animaciones:
  ![SpawnInfo](./Spawn.png)
  15. Añadimos el controlador que hemos duplicado al Animator del enemigo Torreta.
 
-### Cuarto Ejemplo: TikTik
+### Cuarto Ejemplo: Spline Chicken
 
-Vamos a crear un enemigo del HollowKnight, el [TikTik](https://hollowknight.fandom.com/es/wiki/Tiktik), este va recorriendo una plataforma bordeándola.  
+Vamos a crear un enemigo del *HollowKnight*, el [TikTik](https://hollowknight.fandom.com/es/wiki/Tiktik), este va recorriendo una plataforma bordeándola.  
 Para el ejemplo usaremos la imagen del pollo:
 
 ![Chicken](./chicken.png)  
@@ -481,7 +566,7 @@ Antes de empezar con la creación del enemigo, añadiremos un objeto 2D cuadrado
 Empecemos con el enemigo:
 
  1. Crea un objeto llamado Chicken partiendo del prefab BaseEnemy que se encuentra en Assets/Prefabs.
- 2. Cambia el *Sprite Renderer* al del pollo que se encuentra en Assets/Animations/Sprites/Chicken y ajusta el Collider a la imagen.
+ 2. Cambia el Sprite del *Sprite Renderer* al del pollo que se encuentra en Assets/Animations/Sprites/Chicken y ajusta el Collider (Edit Collider y ajustamos sus lados) a la imagen.
  3. Configuramos el Damage Emitter:  
      - Active From Start: True
      - Damage Type: Instant
@@ -493,8 +578,8 @@ Empecemos con el enemigo:
  6. Cambiamos el Spline a escala negativa en el eje X.
  7. Configuramos el Spline Follower Actuator:
     - Spline Container: Añadimos el spline recien creado como referencia
-    - Teleport to Closest Point: Enemy
-    - Is Acelerated: False
+    - Teleport to Closest Point: Move Enemy To Spline
+    - Is Accelerated: False
     - Speed: 1
 
 Ahora vamos a ajustar las animaciones:
@@ -508,7 +593,7 @@ Ahora vamos a ajustar las animaciones:
  12. Hacemos click sobre el estado Idle y arrastramos la animación que queremos hacer hasta Motion, en este caso vamos a usar Hit que se encuentra en Assets/Animations/Sprites/Chicken.
  13. Añadimos el controlador que hemos duplicado al Animator del enemigo Chicken.
 
-### Quinto Ejemplo: Trampa del techo
+### Quinto Ejemplo: Falling Fat Bird
 
 Por último vamos a crear un enemigo común. Las trampas que caen del techo.
 Para el ejemplo usaremos la imagen del pájaro:
@@ -516,18 +601,18 @@ Para el ejemplo usaremos la imagen del pájaro:
 ![FatBird](./FatBird.png)
 
   1. Crea un objeto llamado FatBird partiendo del prefab BaseEnemy que se encuentra en Assets/Prefabs.
-  2. Cambia el *Sprite Renderer* al del pájaro que se encuentam en Assets/Animations/Sprites/FatBird y ajusta el Collider a la imagen.
+  2. Cambia el Sprite *Sprite Renderer* al del pájaro que se encuentam en Assets/Animations/Sprites/FatBird y ajusta el Collider a la imagen.
   3. Configuramos el Damage Emitter:  
       - Active From Start: True
       - Damage Type: Instant
       - Destroy After Doing Damage: True
       - Instant Kill: True
-  4. Congela la rotación en Constraints del Rigidbody 2D.
+  4. Congela la rotación del Rigidbody2D en la opción Rigidbody2D → Constraints → Freeze Rotation → Z.
   5. Añadimos un elemento a Transition List del componente State que viene por defecto en el BaseEnemy.
-  6. Crear un nuevo componente State y asignarlo como Target State  del elemento creado en el punto 5.
+  6. Crear un nuevo componente State y asignarlo como Target State del elemento creado en el punto 5. Para ello, basta con arrastrar el nuevo componente State al campo Target State.
   7. Para el sensor que activará la transición, vamos a crear un objeto 2D cuadrado vacío que contenga:
-    - Box Collider 2D: Ajustar el Collider al área donde queremos que detecte que entra el jugador.
-    - Area Sensor, configurada como:
+    - Box Collider 2D: Ajustar el Collider al área donde queremos que detecte que entra el jugador con la opción Edit Collider.
+    - Añadimos un componente Area Sensor, configurado como:
       - Start Detecting Time: 0
       - Target: Player (referencia al jugador)
       - Detection Condition: Inside Magnitude (queremos que detecte cuando entra en ese área)
@@ -542,7 +627,7 @@ Para el ejemplo usaremos la imagen del pájaro:
       - Is Accelerated: False  
       - Throw: False  
       - Speed: 10  
-  12. Añadimos el componente DamageEmitter ya creado a la lista de DamageEmitter del segundo State.
+  12. Añadimos el componente DamageEmitter ya creado a la lista de DamageEmitter del segundo State, arrastrándolo hasta ahí.
 
 Ahora vamos a ajustar las animaciones:
 
@@ -559,6 +644,7 @@ Ahora vamos a ajustar las animaciones:
 
 
 Para los usuarios que vayan a realizar las pruebas pertinentes, a continuación les proporcionamos el [enlace](https://docs.google.com/forms/d/e/1FAIpQLSf8PoIgNjA8txm0fkzrJ5Hyyg_QtLrCoOKa4X4AMLo8HZobgA/viewform?usp=header) al cuestionario
+
 ## Solución de Problemas
 
 | Problema                  | Solución                          |

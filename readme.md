@@ -96,21 +96,25 @@ Step-by-step installation:
 
 ## Detailed Components
 
+All the components of the Framework will be found in the Scripts folder.
+This folder will be used as a reference to indicate the location of the components mentioned below.
 ### Actuators
 
 Actuators are components that allow enemies to perform actions. These actions define the movement or creation of other enemies.
+Will find all the actuators in the folder *Actuators*
 We have 7 types of actuators:
 
 - **Spawner Actuator**:  
 ![SpawnerActuator](./Manual/SpawnerActuator.png)  
-  Allows generating (spawning) new enemies.
-  - *Infinite Enemies:* if you want to create infinite enemies, otherwise you must specify the number of times you want to spawn the list.
-  - *Spawn Interval:* how often enemies are created.
-  - *Prefab to Spawn:* object you want to create.
-  - *Spawn Point:* position where you want the object to be created.
+  Allows generating (spawning) new enemies. It is located in *Actuators/Spawner*.
+  - *Infinite Enemies:* If you want to create infinite enemies, otherwise you must specify the number of times you want to spawn the list.
+  - *Spawn Interval:* How often enemies are created.
+  - *Prefab to Spawn:* Object you want to create.
+  - *Spawn Point:* Position where you want the object to be created.
 
   Being a list, you can spawn more than one object at a time.
 
+The following actuators can be found in the folder *Actuators/Movement*:
 - **Horizontal Actuator**:  
 ![HorizontalActuator](./Manual/HorizontalActuator.png)  
 This actuator allows moving an object horizontally, either to the left or to the right, with different speed and behavior configurations after a collision. It has different configurations.
@@ -120,6 +124,10 @@ This actuator allows moving an object horizontally, either to the left or to the
     - *None:* No reaction upon collision.
     - *Bounce:* The object changes direction and continues moving in the opposite direction.
     - *Destroy:* The object disappears upon collision.
+  - *Layers To Collide*
+  If Reaction After Collision is not set to None, this field will appear to determine which physics layer can trigger the designated action.
+  - Follow Player
+  If checked, the object will move horizontally toward the player. This option disables the ability to choose a direction.
   - *Direction*
   Determines where the object moves:
     - *Left:* The object will move to the left.
@@ -142,6 +150,10 @@ This actuator allows moving an object horizontally, either to the left or to the
     - *None:* No reaction upon collision.
     - *Bounce:* The object changes direction and continues moving in the opposite direction.
     - *Destroy:* The object disappears upon collision.
+  - *Layers To Collide*
+  If Reaction After Collision is not set to None, this field will appear to determine which physics layer can trigger the designated action.
+  - Follow Player
+  If checked, the object will move horizontally toward the player. This option disables the ability to choose a direction.
   - *Direction*
   Determines where the object moves:
     - *Up:* The object will move upwards.
@@ -163,9 +175,8 @@ This actuator allows moving an object horizontally, either to the left or to the
     - *None:* No reaction upon collision.
     - *Bounce:* The object changes direction and simulates a bounce.
     - *Destroy:* The object disappears upon collision.
-  - *Angle:* Angle at which the object will move.
-  - *Aim Player:* Indicates whether the object will follow the player's direction (with this option, the angle does not appear because its value is determined by your position and the target's position).<br>
-  For this to happen there must be an object with [tag](#tag) "Player".
+  - *Layers To Collide*
+  If Reaction After Collision is not set to None, this field will appear to determine which physics layer can trigger the designated action.
   - *Is Accelerated*
     - *False:* If not accelerated, the enemy will move with a constant linear speed. You can configure:
       - *Throw:* The force will be applied only once, simulating a launch.
@@ -175,15 +186,20 @@ This actuator allows moving an object horizontally, either to the left or to the
       - *Goal Speed:* This is the maximum speed the object will reach after accelerating.
       - *Interpolation Time:* This is the time it takes for the object to go from actual speed to its target speed.
       - *Easing Function:* Defines how the acceleration behaves.
-
+  - *Angle:* Angle at which the object will move.
+  - *Aim Player:* Indicates whether the object will follow the player's direction (with this option, the angle does not appear because its value is determined by your position and the target's position).<br>
+  For this to happen there must be an object with [tag](#tag) "Player".
+  
 - **Circular Actuator**:  
 ![CircularrActuator](./Manual/CircularActuator.png)  
  Permits circular movements around a specific rotation point.
-  - *Rotation Point Position*
+  - *Rotation Point*
     Defines the central point around which the rotation occurs.
     - *None:* If not assigned, the object will rotate around its own center.
     - *[Transform](#transform):* If an object is assigned, the rotation will occur around that point.
-
+  - *Point Player*
+   The object will rotate 
+   The object will rotate based on the player's position.
   - *Max Angle*
     Maximum angle that the circular movement can reach (360 indicates a full circle, other angles behave like a pendulum).
 
@@ -199,28 +215,38 @@ This actuator allows moving an object horizontally, either to the left or to the
       - *Interpolation Time:* This is the time it takes for the object to go from speed 0 to its target speed.
       - *Easing Function:* Defines how the acceleration behaves.
 
-- **Move to a Point Actuator**:  
-Makes the enemy move towards a specific fixed point in the scene. There are two configurations depending on *Use Way*:
+- **Move To A Point Actuator**:  
+Makes the enemy move towards a specific fixed point in the scene. There are two configurations depending on *Mode*:
   - *Random Area*: Picks random points within an area.  
 ![MoveToAPointActuator](./Manual/MoveToAPointActuatorA.png)  
-    - *Random Area:* [Collider](#collider) that will serve as the area reference.
-    - *Time Between Random Points:* How often the point changes to a different one.
-  - *Waypoint*: Indicates that we want to follow a predetermined path of points.
-    - *Is A Cycle:* Indicates whether we want the list to restart when reaching the end of the waypoints.
-    - *Same Waypoints Behaviour:* Indicates whether we want the behavior to be the same for all waypoints.
+    - *Random Area*
+     [Collider](#collider) that will serve as the area reference.
+    - *Time Between Random Points*
+     How often the point changes to a different one.
+  - *Waypoint*
+   Indicates that we want to follow a predetermined path of points.
+    - *Loop*
+     Indicates whether we want the list to restart when reaching the end of the waypoints.
+    - *Same Waypoints Behaviour*
+     Indicates whether we want the behavior to be the same for all waypoints.
       - If so, a single point specification panel will be created:  
 ![MoveToAPointActuator](./Manual/MoveToAPointActuatorS.png)  
-        - *Time Between Waypoints:* Time taken between one point and another.
-        - *Are Accelerated:* Whether the movement is accelerated or not. If so, an easing function will appear indicating the acceleration.
-        - *Should Stop:* Indicates whether to stop upon reaching a point. If it should stop, specify the duration.
+        - *Time Between Waypoints*
+         Time taken between one point and another.
+        - *Are Accelerated*
+         Whether the movement is accelerated or not. If so, an easing function will appear indicating the acceleration.
+        - *Should Stop*
+         Indicates whether to stop upon reaching a point. If it should stop, specify the duration.
       - If not, the same data will appear for each waypoint.  
     ![MoveToAPointActuator](./Manual/MoveToAPointActuator.png)  
 
-- **Move to an Object Actuator**:  
+- **Move To An Object Actuator**:  
 ![MoveToAnObjectActuator](./Manual/MoveToAnObjectActuator.png)  
   Makes the enemy automatically move towards a specific object. If the object moves, the enemy will change its direction to go towards the object.
-  - *Waypoint Transform:* Transform of the object to be chased.
-  - *Time to Reach:* Time it takes to reach the target.
+  - *Object Transform*
+   Transform of the object to be chased.
+  - *Time To Reach*
+   Time it takes to reach the target.
   - *Is Accelerated:*
     - *False:* If not accelerated, the position will change constantly.
     - *True:* If accelerated, the position will be defined by the easing function.  
@@ -228,53 +254,75 @@ Makes the enemy move towards a specific fixed point in the scene. There are two 
 - **Spline Follower Actuator**:  
 ![SpllineFollowerActuator](./Manual/Spline.png)  
   Makes the enemy automatically move and rotate following a path defined by a spline.
-  - *Spline Container:* Transform of the object to be chased.
-  - *Speed:* Time it takes to reach the target.
+  - *Spline Container*
+   Transform of the object to be chased.
+  - *Teleport To Closest Point*
+   Indicates which object will have its position updated in case the enemy's position does not match the Spline.
+  - *Speed*
+   Time it takes to reach the target.
   - *Is Accelerated*
-    - *False:* If not accelerated, the object will move at a constant speed defined by the *Speed* parameter.
-    - *True:* If accelerated, the speed will increase progressively according to the following parameters:
-      - *Goal Speed:* This is the maximum speed the object will reach.
-      - *Interpolation Time:* This is the time it takes for the object to go from current speed to it's target speed.
-      - *Easing Function:* Defines how the acceleration behaves.
+    - *False*
+     If not accelerated, the object will move at a constant speed defined by the *Speed* parameter.
+    - *True*
+     If accelerated, the speed will increase progressively according to the following parameters:
+      - *Goal Speed*
+       This is the maximum speed the object will reach.
+      - *Interpolation Time*
+       This is the time it takes for the object to go from current speed to it's target speed.
+      - *Easing Function*
+       Defines how the acceleration behaves.
 
 ### Sensors
 
 Sensors allow detecting information from the environment and triggering transitions.
-We have five sensors:
+We have five sensors available, and they can be found in *SensorsAndEmitters/TypeOfSensors*:
 
 - **Area Sensor:**  
  ![AreaSensor](./Manual/AreaSensor.png)  
- The area sensor detects when a specific object enters its detection zone.
-
-  - *Start Detecting Time:* Delay time until detection starts.
-  - *Target:* Object to be detected.
-  - *Detection Condition:* Indicates whether to detect when leaving or entering the area.
+ The area sensor detects when a specific object enters its detection zone.<br>
+  - *Start Detecting Time*
+   Delay time until detection starts.
+  - *Target*
+   Object to be detected.
+  - *Detection Condition*
+   Indicates whether to detect when leaving or entering the area.
 
 - **Collision Sensor:**  
  ![CollisionSensor](./Manual/CollisionSensor.png)  
- Detects when the enemy physically collides with another object. Unlike the *Area Sensor*, this requires an actual collision rather than just detecting presence within an area.
-
+ Detects when the enemy physically collides with another object. Unlike the *Area Sensor*, this requires an actual collision rather than just detecting presence within an area.<br>
   You must specify which *[physics layers](#capa-fisica)* activate the sensor.
-  - *Start Detecting Time:* Delay time until detection starts.
-  - *Layers to Collide:* Physics layer mask indicating what we want to collide with.
+  - *Start Detecting Time*
+   Delay time until detection starts.
+  - *Layers to Collide*
+   Physics layer mask indicating what we want to collide with.
 
 - **Distance Sensor:**  
 ![DistanceSensor](./Manual/DistanceSensor.png)  
- Detects when a specific object *Target* is at a *certain distance from the enemy*.
-
-  - *Distance type:* Type of distance to check.
+ Detects when a specific object *Target* is at a *certain distance from the enemy*.<br>
+  - *Distance type*
+   Type of distance to check.
     - Magnitude: 360 degrees of detection.
     - Single Axis: A single axis.
-  - *Detection Condition:* Indicates whether to detect when leaving or entering the area.
-  - *Target:* Object to be detected.
-  - *Start Detecting Time:* Delay time until detection starts.
-  - *Detection Distance:* Detection distance.
+  - *Detection Condition*
+   Indicates whether to detect when leaving or entering the area.
+  - *Target*
+   Object to be detected.
+  - *Start Detecting Time*
+   Delay time until detection starts.
+  - *Detection Distance*
+   Detection distance.
 
 - **Time Sensor:**  
  ![TimeSensor](./Manual/TimeSensor.png)  
  Detects when a specific time elapses.
-  - *Start Detecting Time:* Delay time until detection starts.
-  - *Detection Time:* Detection time.
+  - *Start Detecting Time*
+   Delay time until detection starts.
+  - *Detection Time*
+   Detection time.
+
+### Damage
+
+To be able to deal damage, a sensor and an emitter are required.
 - **Damage Sensor:**  
 ![DamageSensor](./Manual/DamageSensor.png)  
  Detects when an entity *receives damage*.
@@ -287,24 +335,34 @@ We have five sensors:
   - **Instant:**  
   ![DamageEmitter](./Manual/DamageEmitter.png)  
   Instant damage that affects only once upon contact.
-    - *Destroy After Doing Damage:* Allows indicating whether the object should disappear after dealing damage.
-    - *Instant Kill:* Allows indicating whether to directly kill the entity it collides with.
-    - *Damage Amount:* If you don't want to instantly eliminate the entity it collides with, indicate the damage to be applied.
+    - *Destroy After Doing Damage*
+     Allows indicating whether the object should disappear after dealing damage.
+    - *Instant Kill*
+     Allows indicating whether to directly kill the entity it collides with.
+    - *Damage Amount*
+     If you don't want to instantly eliminate the entity it collides with, indicate the damage to be applied.
 
   - **Permanence:**  
   ![DamageEmitterP](./Manual/DamageEmitterP.png)  
   Damage over time that affects while you are inside the object.
-    - *Damage Amount:* Amount of health subtracted each time.
-    - *Damage Cooldown:* Time interval between each damage application.
+    - *Damage Amount*
+     Amount of health subtracted each time.
+    - *Damage Cooldown*
+     Time interval between each damage application.
 
   - **Residual:**  
   ![DamageEmitterR](./Manual/DamageEmitterR.png)  
   Residual damage continues to affect even when you are no longer in contact.
-    - *Destroy After Doing Damage:* Allows indicating whether the object should be destroyed after the first hit.
-    - *Instant Damage Amount:* Initial damage applied upon first contact.
-    - *Residual Damage Amount:* Damage applied in each residual repetition.
-    - *Damage Cooldown:* Time interval between each residual damage application.
-    - *Number Of Applications:* Total number of times residual damage is applied.
+    - *Destroy After Doing Damage*
+     Allows indicating whether the object should be destroyed after the first hit.
+    - *Instant Damage Amount*
+     Initial damage applied upon first contact.
+    - *Residual Damage Amount*
+     Damage applied in each residual repetition.
+    - *Damage Cooldown*
+     Time interval between each residual damage application.
+    - *Number Of Applications*
+     Total number of times residual damage is applied.
 
 ### State
 
@@ -312,9 +370,12 @@ A state is a specific behavior that an enemy can have at a certain time. States 
  ![State](./Manual/State.png)  
  Makes the enemy automatically move and rotate following a path defined by a spline.
 
-- *Actuator List:* Action/actions we are going to perform.
-- *Transition List:* To have *Transitions* from one state to another, you must specify the sensor that will be responsible for detecting that change and the state you want to transition to.
-- *Damaged Emitters:* If we want damage to be dealt in this state, we must specify which *DamageEmitter* will be active.
+- *Actuator List*
+ Action/actions we are going to perform.
+- *Transition List*
+ To have *Transitions* from one state to another, you must specify the sensor that will be responsible for detecting that change and the state you want to transition to.
+- *Damaged Emitters*
+ If we want damage to be dealt in this state, we must specify which *DamageEmitter* will be active.
 - *Debug State:* If we want to *debug* information about the movement to be performed.
 
 ### Finite State Machine (FSM)
@@ -322,26 +383,33 @@ A state is a specific behavior that an enemy can have at a certain time. States 
  ![FSM](./Manual/FSM.png)  
  The FSM organizes an enemy's behavior into **states** (Idle, Patrol, Attack, etc.). This component is responsible for calling and managing all the states of an enemy.
 
-- *Initial State:* the enemy's initial state.
+- *Initial State*
+ The enemy's initial state.
 
 **Example:** A "Guard" can have states like Patrol, Chase, and Attack. If the player enters its field of vision, it transitions from Patrol to Chase. If it reaches the player, it transitions to Attack. If it loses sight of the player, it returns to Patrol.
 
 ### Animator Manager
 
 Manages the animations of enemies based on their states and actions. If you want to add an animation, you also need to add a Unity Animator component.
-It is important that all [sprites}(#sprite) intended for use *face to the right*.
+It is important that all [sprites](#sprite) intended for use *face to the right*.
 
-- *Can [Flip](#flip) X:* Indicates if the sprite can rotate in X axis.
-- *Can Flip Y:* Indicates if the sprite can rotate in Y axis.
+- *Can [Flip](#flip) X*
+ Indicates if the sprite can rotate in X axis.
+- *Can Flip Y*
+ Indicates if the sprite can rotate in Y axis.
 
 ### Life
 
 Manages the life of objects.  
  ![Life](./Manual/Life.png)
 
-- *Initial Life:* Initial health.
-- *Entity type:* Type of entity (Player or Enemy).
 
+- *Entity Type*
+ Type of entity (Player or Enemy).
+- *Initial Life*
+ Initial health.
+- *Max Life*
+  Max Health
 ## Practical Examples
 
 All examples start from the Scene Template: **Base Scene**.  
@@ -360,43 +428,34 @@ One of the most common enemies are spikes, which do not move but do damage to th
 For the example, I will use the stone image:  
 ![Spikes](./Manual/Pinchos.png)
   1. Create an object named *spikes* from the BaseEnemy prefab located in Assets/Prefabs.
-
-  2. Change the *[Sprite Renderer](#sprite-renderer)* to the spikes image (if it doesn’t already match), which is located in Assets/Animations/Sprites/Spikes, and adjust the Collider to fit the image.
-
-  3. Freeze the X and Y positions under the Constraints section of the Rigidbody 2D, so that the spikes remain fixed in place.
-
-  4. Remove the AnimatorManager and Animator components, since the object doesn't require animation.
-
-  5. Configure the Damage Emitter as follows:
+  2. Change the Sprite from the *[Sprite Renderer](#sprite-renderer)* to the spikes image (if it doesn’t already match), which is located in Assets/Animations/Sprites/Spikes, and adjust the Collider to fit the image.
+  3. Freeze the enemy's position on both the X and Y axes by selecting the option in the Rigidbody2D component → Constraints → Freeze Position → X/Y, so that the spikes remain fixed.
+  4. Freeze the enemy's rotation by selecting the option in the Rigidbody2D component → Constraints → Freeze Rotation → Z.
+  5. Remove the AnimatorManager and Animator, as they are not necessary in this case since the object has no animation.
+  6. Configure the Damage Emitter as follows:
       - Active From Start: True
       - Damage Type: Permanence
-      - Destroy After Doing Damage: False
       - Damage Amount: 1
       - Damage Cooldown: 2
 
 
 
-### Second Example: Wanderer
+### Second Example: Bouncing Bunny
 
 Another very common enemy is a wanderer, also known as: Goomba, Reptacillo, or by another name in many games.
 For the example, I will use the rabbit image:  
 ![Oso](./Manual/Bunny.png)
 
   1. Create an object named deambulador from the BaseEnemy prefab, located in Assets/Prefabs.
-
   2. Change the Sprite Renderer to any Bunny image found in Assets/Animations/Sprites/Bunny, and adjust the Collider to match the image.
-
-  3. Freeze the rotation under Constraints of the Rigidbody 2D.
-
+  3. Freeze the enemy's rotation by selecting the option in the Rigidbody2D component → Constraints → Freeze Rotation → Z.
   4. Configure the Damage Emitter as follows:
-      - Active From Start: True
+     - Active From Start: True
      - Damage Type: Instant
-      - Destroy After Doing Damage: False
+     - Destroy After Doing Damage: False
      - Instant Kill: False
-      - Damage Amount: 1
-
-  5. Add a Horizontal Actuator movement component and add it to the Actuator List of the State.
-
+     - Damage Amount: 
+  5. Add an Horizontal Movement Actuator component to the object and drag it into the Actuator List of the State.
   6. Configure the Horizontal Actuator:
       - Reaction After Collision: Bounce
       - Layers to Collide: World, Player
@@ -408,37 +467,33 @@ For the example, I will use the rabbit image:
   7. Configure the Animator Manager:
       - Can Flip X: True
       - Can Flip Y: False
-
   8. Duplicate the *Animator Controller* that comes as an example in Assets/Animations.
-
   9. Open Unity’s animation editor (by double-clicking the Animator Controller you just created), where you’ll see many states. Since we only want the animations for Horizontal Movement, Damage, and Die, delete all other states (select them with the mouse and press Delete).
-
   10. Click on the Horizontal Movement state and drag the animation you want to use into Motion — in this case, use Run from Assets/Animations/Sprites/Bunny.
-
   11. Click on the Damage state and drag the animation you want to use into Motion — in this case, use Hit from Assets/Animations/Sprites/Bunny.
-
   12. Click on the Die state and drag the animation you want to use into Motion — again, use Hit from Assets/Animations/Sprites/Bunny.
-
   13. Assign the duplicated Animator Controller to the Animator component of the deambulador enemy.
+  14. Finally, we add the *Life* component, which will also automatically add a DamageSensor.
+  15. The parameters of the *Life* component should be set as follows:
+     - Initial Life: 1
+     - Max Life: 1
+  16. In the *DamageSensor*, check the Active From Start box.
 
-
-
-### Third Example: Turret + Bullets
-
+### Third Example: Trunk Torret
 Let's continue creating an enemy that shoots bullets. To do this, we will first create the bullets and then the enemy.
 For the bullet example, I will use the bullet image:  
-![Bullet](./Manual/Bullet.png)
 
+![Bullet](./Manual/Bullet.png)
   1. Create a prefab named Bullet from the BaseEnemy prefab, located in Assets/Prefabs.
   2. Change the Sprite Renderer to the bullet sprite found in Assets/Animations/Sprites/Trunk, and adjust the Collider to match the image.
-  3. Freeze the rotation in the Constraints section of the Rigidbody 2D.
+  3. Freeze the enemy's rotation by selecting the option in the Rigidbody2D component → Constraints → Freeze Rotation → Z.
   4. Configure the Damage Emitter as follows:
       - Active From Start: True
       - Damage Type: Instant
       - Destroy After Doing Damage: True
       - Instant Kill: False
       - Damage Amount: 1
-  5. Add a Horizontal Movement component and add it to the Actuator List of the State.
+  5. We add a Horizontal Movement Actuator component to the object and drag it into the Actuator List of the State.
   6. Configure the Horizontal Movement:
       - Reaction After Collision: Destroy
       - Layers to Collide: World, Player
@@ -448,6 +503,11 @@ For the bullet example, I will use the bullet image:
       - Throw: False
       - Speed: 10
   7. Remove the AnimatorManager and Animator components, as they are not needed (the object has no animation).
+  8. Finally, we add the *Life* component, which will also automatically add a DamageSensor.
+  9. The parameters of the *Life* component should be set as follows:
+     - Initial Life: 1
+     - Max Life: 1
+  10. In the *DamageSensor*, check the Active From Start box.
 
 Now let's create the Turret:
 For the turret example, I will use the plant image:  
@@ -455,7 +515,7 @@ For the turret example, I will use the plant image:
 
   1. Create an object named Torret from the BaseEnemy prefab located in Assets/Prefabs.
   2. Change the Sprite Renderer to the trunk image located in Assets/Animations/Sprites/Trunk and adjust the Collider to fit the image.
-  3. Freeze the rotation and the X and Y positions in the Rigidbody 2D Constraints so that the turret remains fixed.
+  3. Freeze the enemy's rotation by selecting the option in the Rigidbody2D component → Constraints → Freeze Rotation → Z. Freeze the enemy's position on both the X and Y axes too by selecting the option in the Rigidbody2D component → Constraints → Freeze Position → X/Y, so that the spikes remain fixed.
   4. Remove the Damage Emitter component and delete it from the Damage Emitter List in the State.
   5. Add a Spawner Actuator component and include it in the Actuator List of the State.
   6. Configure the Spawner Actuator as follows:
@@ -481,9 +541,9 @@ Now let’s configure the animations:
   15. Assign the duplicated Animator Controller to the Animator component of the turret enemy.
 
 
-### Fourth Example: TikTik 
+### Fourth Example: Spline Chicken 
 
-Let's create an enemy from HollowKnight, the [TikTik](https://hollowknight.fandom.com/es/wiki/Tiktik), which moves along a platform, following its edge.
+Let's create an enemy from *HollowKnight*, the [TikTik](https://hollowknight.fandom.com/es/wiki/Tiktik), which moves along a platform, following its edge.
 For this example, we will use the chicken image:
 
 ![Chicken](./Manual/chicken.png)  
@@ -493,7 +553,7 @@ Before we start creating the enemy, let's add a 2D square object that will serve
 Let's start with the enemy:
 
   1. Create an object called Chicken by duplicating the BaseEnemy prefab located in Assets/Prefabs.
-  2. Change the *Sprite Renderer* to the chicken sprite located in Assets/Animations/Sprites/Chicken and adjust the Collider to match the image.
+  2. Change the *Sprite Renderer* to the chicken sprite located in Assets/Animations/Sprites/Chicken and adjust the Collider (Edit Collider and adjust it's sides) to match the image.
   3. Configure the Damage Emitter:
       - Active From Start: True
       - Damage Type: Instant
@@ -520,7 +580,7 @@ Let's start with the enemy:
   12. Click on the Damage state and drag the animation you want to use into the Motion field; in this case, use Hit from Assets/Animations/Sprites/Chicken.
   13. Add the duplicated controller to the Animator of the Chicken enemy.
 
-### Fifth Example: Stalactites
+### Fifth Example: Falling Fat Bird
 
 Finally, let's create a common enemy: stalactites.
 For the example, we will use the bird image:  
@@ -534,9 +594,9 @@ For the example, we will use the bird image:
       - Damage Type: Instant
       - Destroy After Doing Damage: True
       - Instant Kill: True
-  4. Freeze rotation in the Constraints section of the Rigidbody 2D component.
+  4. Freeze the enemy's rotation by selecting the option in the Rigidbody2D component → Constraints → Freeze Rotation → Z.
   5. Add a new element to the Transition List in the State component (included by default in the BaseEnemy).
-  6. Create a new State component and assign it as the Target State for the element created in step 5.
+  6. Create a new State component and assign it as the Target State for the element created in step 5. To do this, simply drag the new State component into the Target State field.
   7. For the sensor that will trigger the transition, create an empty 2D square object that includes:
       - Box Collider 2D: Adjust it to the area where you want to detect the player’s entry.
       - Area Sensor, configured as follows:
@@ -554,7 +614,7 @@ For the example, we will use the bird image:
       - Is Accelerated: False
       - Throw: False
       - Speed: 10
-  12. Add the already existing DamageEmitter component to the DamageEmitter list of the second State.
+  12. Add the already existing DamageEmitter component to the DamageEmitter list of the second State by dragging it.
 
 Now let’s adjust the animations:
 
@@ -568,6 +628,9 @@ Now let’s adjust the animations:
   18. Click on the Die state and drag in the animation — use GroundFatBird from Assets/Animations/Sprites/FatBird.
   19. Double-click on the Vertical Movement state, and in the Down sub-state drag in the FallFatBird animation found in Assets/Animations/Sprites.
   20. Add the duplicated controller to the Animator component of the FatBird enemy.
+
+
+For users who are going to carry out the relevant tests, we provide the following [link](https://docs.google.com/forms/d/e/1FAIpQLSf8PoIgNjA8txm0fkzrJ5Hyyg_QtLrCoOKa4X4AMLo8HZobgA/viewform?usp=header) to the questionnaire.
 
 ## Troubleshooting
 
