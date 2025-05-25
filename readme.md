@@ -61,14 +61,21 @@ Before starting, make sure you meet the following requirements:
 
 Step-by-step installation:
 
-1. Download the Tool from GitHub:
-   - The tool is distributed as a Unity package via a GitHub URL. To obtain the tool, go to [Link](https://github.com/CiscoGalvan/TFG/blob/main/Package/FrameworkEnemies2D.unitypackage).
-   - Once in the repository, press *Control + Shift + S* keys or click on *More File Actions* (three-dot button) and select *Download*.
-2. Open Unity and load your project or create a new 2D project.
-3. In Unity, go to *Assets > Import Package > Custom Package*.
-4. Select the downloaded file (*.unitypackage*).
-5. Press *Import* and make sure to check all the necessary options.
-6. Once imported, verify that the tool's assets appear in the Unity *Project* window.
+1. Open your Unity project or create a new 2D project.
+2. Go to `Window > Package Manager`.
+3. In the Package Manager window, click the `+` button in the top left corner.
+4. Select `Add package from Git URL...`.
+5. Paste the following URL: https://github.com/CiscoGalvan/EnemyBehaviorToolUPM.git
+6. Click `Add` and wait for Unity to install the package.
+7. (Optional) To import the sample content:
+- In Package Manager, select `Enemy Behavior Tool`.
+- Scroll down to the **Samples** section.
+- Click `Import` next to any of the available samples:
+  - Animations
+  - Materials
+  - Prefabs
+  - Scenes
+8. Once imported, the package content will be available.
 
 ## Package Contents
 

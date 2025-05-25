@@ -62,14 +62,27 @@ Antes de comenzar, asegúrate de cumplir con los siguientes requisitos:
 
 ## Instalación
 
-1. Descarga de la Herramienta desde GitHub:
-   - La herramienta se distribuye como un paquete de Unity a través de una URL de GitHub. Para obtener la herramienta, accede al [link](https://github.com/CiscoGalvan/TFG/blob/main/Package/FrameworkEnemies2D.unitypackage).
-   - Una vez en el repositorio, presiona las teclas *Control + Shift + S* o haz clic en *More File Actions* (botón de los tres puntos) y selecciona *Descargar*.
-2. Abre Unity y carga tu proyecto o crea un nuevo proyecto 2D.
-3. En Unity, ve a *Assets > Import Package > Custom Package*.
-4. Selecciona el archivo descargado (*.unitypackage*).
-5. Presiona *Importar* y asegúrate de marcar todas las opciones necesarias.
-6. Una vez importado, verifica que los archivos de la herramienta aparecen en la ventana *Project* de Unity.
+1. Abre tu proyecto de Unity o crea uno nuevo en 2D.
+
+2. Ve a Ventana > Administrador de paquetes (Window > Package Manager).
+
+3. En la ventana del Administrador de paquetes, haz clic en el botón + en la esquina superior izquierda.
+
+4. Selecciona Añadir paquete desde URL de Git... (Add package from Git URL...).
+
+5. Pega la siguiente URL: https://github.com/CiscoGalvan/EnemyBehaviorToolUPM.git
+
+6. Haz clic en Agregar (Add) y espera a que Unity instale el paquete.
+
+7. (Opcional) Para importar el contenido de muestra:
+ - En el Administrador de paquetes, selecciona Enemy Behavior Tool.
+ - Desplázate hacia abajo hasta la sección Ejemplos (Samples).
+ - Haz clic en Importar (Import) junto a cualquiera de los ejemplos disponibles:
+    - Animaciones
+    - Materiales
+    - Prefab
+    - Escenas
+8. Una vez importado, el contenido del paquete estará disponible.
 
 ## Contenido del Paquete
 
