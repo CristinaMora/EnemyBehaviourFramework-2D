@@ -1732,7 +1732,7 @@ MonoBehaviour:
   _infiniteEnemies: 1
   _numofTimesToSpawn: 0
   _spawnPoints:
-  - _prefabToSpawn: {fileID: 6312299861578909251, guid: e84257aa38ddff94197843820b6ef900, type: 3}
+  - _prefabToSpawn: {fileID: 6312299861578909251, guid: b9e9ade329657a84ca75e8d4658b8aa9, type: 3}
     _spawnPoint: {fileID: 286633109}
 --- !u!1001 &369788323
 PrefabInstance:
@@ -5152,7 +5152,7 @@ MonoBehaviour:
   _infiniteEnemies: 1
   _numofTimesToSpawn: 0
   _spawnPoints:
-  - _prefabToSpawn: {fileID: 6312299861578909251, guid: e84257aa38ddff94197843820b6ef900, type: 3}
+  - _prefabToSpawn: {fileID: 6312299861578909251, guid: b9e9ade329657a84ca75e8d4658b8aa9, type: 3}
     _spawnPoint: {fileID: 1294531849}
 --- !u!1001 &1421668287
 PrefabInstance:
